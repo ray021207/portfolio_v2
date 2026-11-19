@@ -6,7 +6,7 @@ A portrait-led, editorial portfolio for computer vision, robotics, machine learn
 
 ## Current implementation
 
-- **Layered hero**, using individual transparent assets in `assets/hero/`: background, mountain medallion, actual approved portrait, ivory name lettering, robot dog, camera trap, sea turtle, deer and fern.
+- **Layered hero**, using individual transparent assets in `assets/hero/`: background, mountain medallion, actual approved portrait, responsive curved SVG name lettering, robot dog, camera trap, sea turtle and deer. The oversized fern overlay was removed because it looked distorted.
 - The **portrait** links to About. Illustrations are accessible links: robot dog → GraphEQA, turtle/deer/camera trap → conservation AI. These are *temporary thematic mappings*; final icon-to-project associations await approval.
 - Desktop top navigation and mobile menu, native wheel scrolling without hijacking, gentle intro and on-scroll reveal, reduced-motion fallback.
 - **Selected work** and an alternating **professional journey** timeline with transparent, evidence-backed descriptions.
@@ -18,7 +18,7 @@ A portrait-led, editorial portfolio for computer vision, robotics, machine learn
 
 ## Important design details
 
-The hero is **composed from separate images**, not a flattened poster. We can scale or rearrange the medallion, photo, name and icons independently to fit laptop and mobile viewports. The source SVG for the medallion is a wrapper around raster art rather than a manually vector-traced image.
+The hero is **composed from separate images**, not a flattened poster. We can scale or rearrange the medallion, photo, name and icons independently to fit laptop and mobile viewports. The two name arcs are inline SVG text paths in `index.html`, with positioning in `assets/hero-arc.css`; the old oversized PNG wordmarks are no longer rendered. The source SVG for the medallion is a wrapper around raster art rather than a manually vector-traced image.
 
 The original background contains a medallion. The new layered hero fades the center of that background while preserving the decorative corners, then uses `assets/hero/mountain-medallion.png` as its independent central focal layer.
 
