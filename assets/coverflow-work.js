@@ -43,7 +43,11 @@
         : Math.min(356, Math.max(292, w * .27));
     const cardHeight = Math.max(narrow ? 300 : 318,
       Math.min(narrow ? 430 : 466, h - 27));
-    const step = narrow ? cardWidth * .86 : medium ? cardWidth * .87 : cardWidth * .93;
+    // The farthest fourth card must stay inside the available laptop width.
+    // Reserve its projected half-width, then divide the remaining space by two.
+    const baseStep = narrow ? cardWidth * .86 : medium ? cardWidth * .87 : cardWidth * .9;
+    const maxInFrame = Math.max(cardWidth * .49, (w / 2 - cardWidth * .33 - 12) / 2);
+    const step = narrow ? baseStep : Math.min(baseStep, maxInFrame);
     stage.style.setProperty('--card-width', cardWidth.toFixed(1) + 'px');
     stage.style.setProperty('--card-height', cardHeight.toFixed(1) + 'px');
 
