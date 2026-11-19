@@ -51,3 +51,23 @@
 @media(max-width:800px){.evidence-hero{padding:115px 0 76px}.evidence-layout{grid-template-columns:1fr;gap:26px}.evidence-sidebar{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.evidence-sidebar .evidence-meta{padding:14px 0}.evidence-stage{padding:60px 0 85px}}
 @media(max-width:500px){.evidence-sidebar{grid-template-columns:1fr}.evidence-stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.evidence-stat{padding:8px 11px}.evidence-topnav{font-size:10px}.evidence-hero h1{font-size:clamp(40px,12vw,65px)}}
 @media(prefers-reduced-motion:reduce){.evidence-actions a{transition:none}}
+
+/* Original experiment artifacts; these are sourced screenshots, plots and photographs,
+   never AI reconstructions. */
+.evidence-gallery{display:grid;grid-template-columns:1fr;gap:19px;margin:29px 0 36px}
+.evidence-gallery figure{margin:0;padding:10px 10px 0;background:#faf8f2;border:1px solid #c6d0bc;border-radius:10px;overflow:hidden}
+.evidence-gallery img{display:block;width:100%;max-height:510px;object-fit:contain;border-radius:5px}
+.evidence-gallery figcaption{font:11px/1.75 var(--font-mono);letter-spacing:.015em;color:#5a7461;padding:13px 5px 16px}
+.evidence-gallery--steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.evidence-gallery--steps figure{padding:8px 8px 0}
+.evidence-gallery--steps img{aspect-ratio:1/1;object-fit:contain}
+.evidence-gallery--steps figcaption{font-size:10px}
+.evidence-metric-bars{margin:36px 0;padding:24px;border:1px solid #b6c7b3;border-radius:9px;background:#e7ecdf}
+.evidence-metric-bars h3{font:400 24px var(--font-serif);margin:0 0 16px;color:#21483a}
+.evidence-metric-bars .metric-bar-row{margin-top:15px}
+.evidence-metric-bars .metric-bar-info{display:flex;justify-content:space-between;gap:15px;align-items:center;margin-bottom:8px;font:11px/1.5 var(--font-mono);color:#365b47}
+.evidence-metric-bars .metric-bar-info strong{font:600 14px var(--font-mono)}
+.evidence-metric-bars .metric-bar-track{height:13px;background:#cbd7c5;border-radius:20px;overflow:hidden}
+.evidence-metric-bars .metric-bar-track>span{height:100%;display:block;width:var(--metric-width,0%);background:linear-gradient(90deg,#315b46,#a77b4f);border-radius:inherit}
+.evidence-metric-bars figcaption{margin-top:16px;font:11px/1.75 var(--font-mono);color:#5a7460}
+@media(max-width:700px){.evidence-gallery--steps{grid-template-columns:repeat(2,minmax(0,1fr))}.evidence-gallery{margin:20px 0}.evidence-gallery figcaption{font-size:10px}}
