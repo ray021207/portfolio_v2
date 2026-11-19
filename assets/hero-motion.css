@@ -131,3 +131,100 @@
   .hero-scene .hero-nav-art::before,
   .hero-scene .hero-nav-art .art-tip{transition:none!important}
 }
+
+/* A miniature field journal of interactions. Original approved illustrations remain unchanged.
+   Motion affects separate translucent effects and the image transform, never navigation or layout. */
+.hero-scene .hero-nav-art .art-effect{
+  position:absolute;display:block;z-index:3;pointer-events:none;
+}
+.hero-scene .dog-footprints{left:24%;bottom:12%;width:58%;height:20%}
+.hero-scene .dog-footprints i{
+  width:11px;height:5px;position:absolute;bottom:13%;left:22%;
+  border-radius:50%;background:#d2b67e;box-shadow:0 0 6px #e5c78e99;
+  transform:rotate(-26deg);opacity:0;
+  animation:dog-paw-trail 6.6s ease-in-out alternate infinite;
+}
+.hero-scene .dog-footprints i:last-child{left:48%;bottom:37%;animation-delay:.35s}
+.hero-scene .art-camera .camera-sweep{
+  inset:22% 21% 31% 28%;border-radius:8px;overflow:hidden;
+  background:linear-gradient(105deg,transparent 31%,#d0a96700 42%,#f6d59f7e 50%,#d0a96700 58%,transparent 68%);
+  background-size:300% 100%;background-position:100% 50%;
+  mix-blend-mode:screen;opacity:.26;
+  animation:camera-lens-sweep 9.2s ease-in-out infinite;
+}
+.hero-scene .art-health .medical-pulse{
+  left:29%;top:53%;width:34%;height:15%;opacity:.67;
+  filter:drop-shadow(0 0 4px #f5dba4aa);
+  animation:monitor-glow 4.2s ease-in-out infinite;
+}
+.hero-scene .medical-pulse svg{width:100%;height:100%;display:block;overflow:visible}
+.hero-scene .medical-pulse path{
+  fill:none;stroke:#f8dfac;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:128;stroke-dashoffset:128;
+  animation:ecg-trace 4.2s ease-in-out infinite;
+}
+.hero-scene .art-deer .vision-shutter{
+  inset:20% 14% 21% 13%;border:1px solid #e2c08e;opacity:0;
+  box-shadow:inset 0 0 20px #ffebac1c,0 0 6px #eec7916b;
+  animation:vision-capture 8s steps(1,end) infinite;
+}
+.hero-scene .art-deer .vision-shutter i{
+  position:absolute;inset:0;background:#fae6b9;opacity:0;
+  animation:vision-glint 8s steps(1,end) infinite;
+}
+@keyframes dog-paw-trail{
+  0%,8%{opacity:0;transform:translateX(0) rotate(-26deg) scale(.7)}
+  17%,21%{opacity:.6;transform:translateX(-8px) rotate(-26deg) scale(.9)}
+  32%,40%{opacity:0;transform:translateX(-18px) rotate(-26deg) scale(1)}
+  100%{opacity:0;transform:translateX(-18px) rotate(-26deg)}
+}
+@keyframes camera-lens-sweep{
+  0%,20%{background-position:100% 50%;opacity:0}
+  30%{opacity:.5}
+  43%{background-position:0% 50%;opacity:.75}
+  55%,100%{opacity:0;background-position:0% 50%}
+}
+@keyframes monitor-glow{
+  0%,12%,44%,100%{opacity:.3}
+  19%,23%{opacity:.82}
+  26%,30%{opacity:.4}
+  33%,37%{opacity:1}
+}
+@keyframes ecg-trace{
+  0%,13%{stroke-dashoffset:128}
+  43%,62%{stroke-dashoffset:0}
+  85%,100%{stroke-dashoffset:-128}
+}
+@keyframes vision-capture{
+  0%,37%,43%,100%{opacity:0}
+  38%,42%{opacity:.75}
+}
+@keyframes vision-glint{
+  0%,39%,42%,100%{opacity:0}
+  40%,41%{opacity:.38}
+}
+/* Precisely two deliberate steps, with a long still moment between them. */
+@keyframes dog-step{
+  0%,12%{transform:translate3d(-5px,2px,0) rotate(-1.8deg)}
+  17%{transform:translate3d(0,-5px,0) rotate(.9deg)}
+  23%,29%{transform:translate3d(6px,0,0) rotate(-.5deg)}
+  35%{transform:translate3d(10px,-5px,0) rotate(1deg)}
+  42%,100%{transform:translate3d(16px,0,0) rotate(-.8deg)}
+}
+.hero-scene .hero-nav-art:is(:hover,:focus-visible) img{animation-play-state:running}
+.hero-scene .art-dog:is(:hover,:focus-visible) img{animation-duration:2.4s}
+.hero-scene .art-camera:is(:hover,:focus-visible) .camera-sweep{animation-duration:2s;opacity:.8}
+.hero-scene .art-health:is(:hover,:focus-visible) .medical-pulse,
+.hero-scene .art-health:is(:hover,:focus-visible) .medical-pulse path{animation-duration:1.7s}
+.hero-scene .art-deer:is(:hover,:focus-visible) .vision-shutter,
+.hero-scene .art-deer:is(:hover,:focus-visible) .vision-shutter i{animation-duration:1.5s}
+.hero-scene .hero-nav-art.motion-paused img,
+.hero-scene .hero-nav-art.motion-paused .art-effect,
+.hero-scene .hero-nav-art.motion-paused .art-effect *,
+.hero-scene .hero-nav-art.motion-paused .art-effect path{animation-play-state:paused!important}
+@media(prefers-reduced-motion:reduce){
+  .hero-scene .hero-nav-art .art-effect,
+  .hero-scene .hero-nav-art .art-effect *,
+  .hero-scene .hero-nav-art .art-effect path{animation:none!important;opacity:0!important}
+  .hero-scene .hero-nav-art:is(:hover,:focus-visible) img{animation:none!important}
+}
