@@ -6,7 +6,7 @@ A layered, portrait-led, editorial portfolio covering robotics, computer vision,
 
 ## Current structure
 
-The home page uses the approved portrait, an independently scalable mountain medallion, and two curved inline SVG name arcs. **Work** goes straight to `projects/index.html`: there is no duplicate work-card section on the homepage. **Journey** opens the approved professional timeline.
+The home page uses the approved portrait, an independently scalable mountain medallion, and two curved inline SVG name arcs. **Work** goes straight to `projects/index.html`, now a **single-viewport four-card, 3D coverflow gallery** with the oversize Work introduction removed. The gallery uses original CSS and vanilla JavaScript inspired by the interaction pattern of the [Origin Kit Coverflow Gallery](https://www.originkit.dev/components/coverflowgallery?preset=base), without copying its proprietary component source. Side cards rotate into selection; the centered card opens its category. Controls include arrows, four position buttons, keyboard navigation, and drag/swipe, with a flat grid for reduced-motion visitors. **Journey** opens the approved professional timeline.
 
 The four interactive hero illustrations lead to individual, filtered subject areas:
 
