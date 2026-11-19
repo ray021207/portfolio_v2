@@ -2,7 +2,7 @@
    Portrait, words, medallion, icons remain independent PNG/SVG layers. */
 .hero-scene {
   height:100svh;
-  min-height:610px;
+  min-height:0;
   overflow:hidden;
   isolation:isolate;
 }
@@ -212,7 +212,7 @@
   .hero-side-note,.hero-intro {display:none}
 }
 @media (max-width:760px) {
-  .hero-scene {min-height:590px}
+  .hero-scene {min-height:0}
   .hero-first {top:12%;width:min(84vw,50vh,620px)}
   .hero-portrait {top:52.5%;width:min(68vw,42vh,470px);max-height:63vh}
   .hero-medallion {top:49%;width:min(105vw,77vh,680px)}
@@ -235,7 +235,7 @@
   .reveal.is-visible {transform:none}
 }
 @media (max-width:460px) {
-  .hero-scene {height:100svh;min-height:550px}
+  .hero-scene {height:100svh;min-height:0}
   .hero-first {top:13%;width:min(94vw,47vh)}
   .hero-portrait {top:52%;width:min(78vw,42vh);max-height:63vh}
   .hero-medallion {top:49%;width:min(123vw,73vh)}
