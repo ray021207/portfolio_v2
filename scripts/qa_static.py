@@ -16,7 +16,7 @@ PAGES = [
     ROOT / "projects/grapheqa.html",
     ROOT / "projects/sinkronized.html",
 ]
-CSS_FILES = [ROOT / "assets/site-v3.css", ROOT / "assets/site-refinement.css"]
+CSS_FILES = [ROOT / "assets/site-v3.css", ROOT / "assets/site-refinement.css", ROOT / "assets/hero-arc.css"]
 JS = ROOT / "assets/site-v3.js"
 ISSUES = []
 
@@ -74,8 +74,6 @@ home = (ROOT / "index.html").read_text("utf-8")
 for required in [
     "assets/hero/mountain-medallion.png",
     "assets/hero/portrait.png",
-    "assets/hero/name-reshma.png",
-    "assets/hero/name-panibhate.png",
     "assets/hero/robot-dog.png",
     "assets/hero/sea-turtle.png",
     "assets/hero/camera-trap.png",
@@ -86,6 +84,16 @@ for required in [
     target = ROOT / required
     if not target.exists() or target.stat().st_size < 1000:
         ISSUES.append(f"Hero layer missing or unexpectedly small: {required}")
+
+# Curved SVG typography replaces the previous PNG name art; keep the portrait clear.
+for expected in ["id=\"heroReshmaArc\"", "id=\"heroPanibhateArc\"",
+                 'class=\"hero-centerpiece\"', 'assets/hero-arc.css']:
+    if expected not in home:
+        ISSUES.append(f"Missing curved hero typography or styling: {expected}")
+if 'class="hero-first"' in home or 'class="hero-last"' in home:
+    ISSUES.append("Old oversized name image layers reintroduced")
+if 'class="art-fern"' in home:
+    ISSUES.append("Distorted hero fern reintroduced")
 
 for css in CSS_FILES:
     if not css.exists():
