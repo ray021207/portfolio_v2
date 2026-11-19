@@ -1,0 +1,219 @@
+/* Awards & Beyond — concise, viewport-friendly editorial chapters.
+   Override the generous global page spacing ONLY for these two homepage sections.
+   No fixed-height clipping, no scroll hijacking: smaller screens may scroll naturally. */
+
+.awards-section,
+.beyond-page {
+  scroll-margin-top: 76px;
+  padding: clamp(26px, 4vh, 42px) 0 clamp(27px, 4vh, 42px);
+  background: #e7e9dd;
+  color: #1a392f;
+}
+.awards-section {
+  min-height: calc(100svh - 76px);
+  display: flex;
+  align-items: flex-start;
+}
+.awards-section > .container { margin-block: auto; }
+.awards-section .section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(230px, .9fr);
+  gap: clamp(24px, 3.5vw, 56px);
+  align-items: end;
+  margin-bottom: 17px;
+}
+.awards-section .section-label {
+  margin-bottom: 10px;
+  font-size: 10px;
+  letter-spacing: .12em;
+}
+.awards-section .display-title {
+  font-size: clamp(42px, 4.1vw, 61px);
+  line-height: 1.02;
+  letter-spacing: -.055em;
+}
+.awards-section .section-head > p {
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0 0 2px;
+  max-width: 410px;
+}
+.awards-section .awards-intro {
+  padding: 12px 0 13px;
+  gap: 24px;
+  align-items: center;
+}
+.awards-section .awards-intro .smallcaps { font-size: 10px; }
+.awards-section .awards-intro p {
+  font: 400 clamp(15px, 1.5vw, 19px)/1.3 var(--font-serif);
+  text-align: right;
+  max-width: 720px;
+}
+.awards-section .awards-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+.awards-section .award-card {
+  min-height: 222px;
+  padding: 17px 19px 18px;
+  gap: 12px;
+  justify-content: space-between;
+}
+.awards-section .award-rank { font-size: 43px; }
+.awards-section .award-rank small {
+  font-size: 9px;
+  margin-top: 7px;
+}
+.awards-section .award-meta { font-size: 9px; line-height: 1.45; }
+.awards-section .award-card h3 {
+  font-size: clamp(25px, 2.1vw, 32px);
+  line-height: 1.05;
+  margin: 6px 0;
+}
+.awards-section .award-card p {
+  font-size: 12px;
+  line-height: 1.55;
+  margin: 0 0 10px;
+}
+.awards-section .award-link {
+  font-size: 10px;
+  line-height: 1.4;
+}
+.awards-next {
+  display: inline-flex;
+  margin-top: 16px;
+  padding: 0 0 5px;
+  border-bottom: 1px solid #809b84;
+  color: #446e56;
+  font: 10px/1.6 var(--font-mono);
+  letter-spacing: .1em;
+  text-decoration: none;
+}
+.awards-next:hover { color: #153f31; }
+
+/* The following chapter: gallery + personal interests fit side by side at laptop size. */
+.beyond-page {
+  min-height: calc(100svh - 76px);
+  border-top: 1px solid #c2cebf;
+}
+.beyond-page > .container { height: 100%; }
+.beyond-page .beyond-section {
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+}
+.beyond-page .beyond-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  column-gap: 40px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+.beyond-page .beyond-heading .section-label {
+  grid-column: 1 / -1;
+  margin: 0 0 10px;
+  font-size: 10px;
+}
+.beyond-page .beyond-heading h2 {
+  margin: 0;
+  font: 400 clamp(39px, 4.1vw, 59px)/1.04 var(--font-serif);
+  letter-spacing: -.055em;
+  color: #1a392f;
+}
+.beyond-page .beyond-heading h2 em { font-weight: 400; }
+.beyond-page .beyond-heading > p:last-child {
+  max-width: 410px;
+  margin: 0 0 2px;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.beyond-page .beyond-stories {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  gap: 12px clamp(22px, 3vw, 40px);
+  align-items: start;
+}
+.beyond-page .beyond-photo-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+.beyond-page .beyond-photo-grid figure { border-radius: 8px; }
+.beyond-page .beyond-photo-grid img {
+  height: clamp(114px, 15.5vh, 155px);
+  object-fit: cover;
+}
+.beyond-page .beyond-photo-grid figcaption { padding: 9px; }
+.beyond-page .beyond-photo-grid figcaption strong {
+  font-size: 15px;
+  line-height: 1.25;
+}
+.beyond-page .beyond-photo-grid figcaption span {
+  font-size: 10px;
+  line-height: 1.45;
+}
+.beyond-page .beyond-personal article {
+  grid-template-columns: 37px minmax(0, 1fr);
+  padding: 11px 0;
+  gap: 10px;
+}
+.beyond-page .beyond-personal article h4 {
+  font-size: clamp(18px, 1.8vw, 23px);
+  line-height: 1.17;
+  margin: 0 0 5px;
+}
+.beyond-page .beyond-personal article p {
+  font-size: 12px;
+  line-height: 1.55;
+  max-width: none;
+}
+.beyond-page .beyond-photo-note {
+  grid-column: 1 / -1;
+  margin: 7px 0 0;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+/* A 3-column desktop award layout is not forced into narrow viewports.
+   Keep all text legible; the page can grow vertically on smaller screens. */
+@media (max-width: 1050px) {
+  .awards-section,
+  .beyond-page { min-height: 0; }
+  .beyond-page .beyond-stories { grid-template-columns: 1fr; gap: 24px; }
+  .beyond-page .beyond-photo-grid img { height: clamp(145px, 23vw, 205px); }
+}
+@media (max-width: 850px) {
+  .awards-section .awards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .awards-section .section-head,
+  .beyond-page .beyond-heading {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .awards-section .section-head > p,
+  .beyond-page .beyond-heading > p:last-child { max-width: 600px; }
+  .awards-section .awards-intro p { text-align: left; }
+}
+@media (max-width: 620px) {
+  .awards-section,
+  .beyond-page { padding: 45px 0 55px; }
+  .awards-section .section-head { margin-bottom: 19px; }
+  .awards-section .display-title { font-size: clamp(39px, 10vw, 54px); }
+  .awards-section .awards-intro { display: block; }
+  .awards-section .awards-intro p { margin-top: 10px; }
+  .awards-section .awards-grid { grid-template-columns: 1fr; }
+  .awards-section .award-card { min-height: 195px; }
+  .beyond-page .beyond-heading h2 { font-size: clamp(38px, 9vw, 54px); }
+  .beyond-page .beyond-photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beyond-page .beyond-photo-grid figure:first-child { grid-column: 1 / -1; }
+  .beyond-page .beyond-photo-grid figure:first-child img { height: 210px; }
+  .beyond-page .beyond-photo-grid img { height: 148px; }
+}
+@media (max-height: 680px) and (min-width: 851px) {
+  .awards-section,
+  .beyond-page { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .awards-section .award-card,
+  .beyond-page .beyond-photo-grid img { transition: none !important; }
+}
