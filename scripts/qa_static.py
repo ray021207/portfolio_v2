@@ -23,6 +23,7 @@ CSS_FILES = [
     ROOT / "assets/portfolio-polish.css",
     ROOT / "assets/awards-compact.css",
     ROOT / "assets/evidence-pages.css",
+    ROOT / "assets/coverflow-work.css",
 ]
 JS = ROOT / "assets/site-v3.js"
 ISSUES = []
@@ -156,7 +157,7 @@ if '<h3>RecoveryIQ</h3>' in home and not re.search(
     ISSUES.append("RecoveryIQ hackathon placement must be second")
 if 'class="page-section beyond-page" id="beyond"' not in home:
     ISSUES.append("Beyond-the-Lab viewport section is missing")
-if 'href="assets/awards-compact.css?v=1"' not in home:
+if 'href="assets/awards-compact.css?v=2"' not in home:
     ISSUES.append("Compact awards layout stylesheet is not loaded")
 if 'class="awards-next" href="#beyond"' not in home:
     ISSUES.append("Awards-to-Beyond navigation is missing")
@@ -183,6 +184,37 @@ if 'href="assets/awards-compact.css?v=2"' not in home:
     ISSUES.append("Personal photography styling is not loaded")
 if 'Foster-puppy photos, animal-journal pages and paintings will be added' in home:
     ISSUES.append("Outdated placeholder caption after personal photo upload")
+
+# Four-card, single-viewport Work explorer — no extra full-screen introduction.
+work_index = ROOT / "projects" / "index.html"
+if work_index.is_file():
+    work = work_index.read_text("utf-8")
+    if "Pick a question." in work or '<section class="subpage-header' in work:
+        ISSUES.append("Old oversized Work hero was reintroduced")
+    if 'class="work-coverflow-main"' not in work:
+        ISSUES.append("Single-screen coverflow main is missing")
+    if 'data-coverflow-stage' not in work:
+        ISSUES.append("Interactive coverflow stage is missing")
+    if work.count('data-coverflow-card') != 4:
+        ISSUES.append("Work explorer must have exactly four project cards")
+    for category in ["robotics", "vision", "health", "conservation"]:
+        if f'href="{category}.html"' not in work:
+            ISSUES.append(f"Missing Work coverflow destination: {category}")
+    for key in ['data-coverflow-prev', 'data-coverflow-next', 'data-coverflow-dot="0"',
+                'data-coverflow-dot="1"', 'data-coverflow-dot="2"', 'data-coverflow-dot="3"']:
+        if key not in work:
+            ISSUES.append(f"Work coverflow control missing: {key}")
+    for asset in ['../assets/coverflow-work.css?v=1', '../assets/coverflow-work.js?v=1']:
+        if asset not in work:
+            ISSUES.append(f"Work coverflow stylesheet/script not linked: {asset}")
+
+work_js = ROOT / "assets/coverflow-work.js"
+if work_js.exists():
+    check = subprocess.run(["node", "--check", str(work_js)], capture_output=True, text=True)
+    if check.returncode != 0:
+        ISSUES.append("Work coverflow JavaScript syntax failed: " + check.stderr.strip())
+else:
+    ISSUES.append("Missing Work coverflow JavaScript")
 
 for page in PAGES:
     if page.name == "index.html" and page.parent == ROOT:
