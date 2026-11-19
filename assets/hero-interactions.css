@@ -1,7 +1,8 @@
 /* Approved-art interaction layer. The illustration is the visual source of truth. */
 .approved-hero{padding:0!important;min-height:0!important;height:auto!important;max-height:none!important;aspect-ratio:auto!important;overflow:visible!important;background:#102e26;isolation:isolate}
-.art-stage{position:relative;aspect-ratio:3/2;width:100%;overflow:hidden;background:#102e26;isolation:isolate}
-.art-stage .approved-art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none;animation:art-settle 1.15s cubic-bezier(.22,.7,.2,1) both}
+.art-stage{position:relative;display:flex;justify-content:center;align-items:center;width:100%;height:calc(100svh - 74px);min-height:0;overflow:hidden;background:#102e26;isolation:isolate}
+.art-canvas{position:relative;flex:0 0 auto;width:min(100%,calc((100svh - 74px)*1.5));aspect-ratio:3/2;max-height:calc(100svh - 74px);overflow:hidden;isolation:isolate;background:#102e26}
+.art-canvas .approved-art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none;animation:art-settle 1.15s cubic-bezier(.22,.7,.2,1) both}
 .art-stage .copper-glow,.art-stage .copper-illustration{z-index:1}
 .art-stage .copper-glow{opacity:.25}
 .art-hit-areas{position:absolute;inset:0;z-index:5;pointer-events:none}
@@ -23,7 +24,7 @@
 .approved-hero[data-active=robotics] .art-outline[data-outline=robotics],
 .approved-hero[data-active=conservation] .art-outline[data-outline=conservation],
 .approved-hero[data-active=climate] .art-outline[data-outline=climate]{opacity:.75;animation:outline-drift 12s linear infinite}
-.art-popover{position:absolute;z-index:12;top:42%;width:min(330px,31%);min-width:270px;padding:21px 21px 17px;border:1px solid #d9c9a8;background:#f3f0e7f5;color:#18352d;border-radius:15px;box-shadow:0 12px 45px #071a1590;backdrop-filter:blur(12px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px) scale(.985);transition:opacity .25s,visibility .25s,transform .25s}
+.art-popover{position:absolute;z-index:12;top:40%;width:clamp(250px,23vw,320px);min-width:0;padding:21px 21px 17px;border:1px solid #d9c9a8;background:#f3f0e7f5;color:#18352d;border-radius:15px;box-shadow:0 12px 45px #071a1590;backdrop-filter:blur(12px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(12px) scale(.985);transition:opacity .25s,visibility .25s,transform .25s}
 .approved-hero[data-side=left] .art-popover{left:3%}
 .approved-hero[data-side=right] .art-popover{right:3%}
 .approved-hero[data-open=true] .art-popover{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0) scale(1)}
@@ -45,6 +46,10 @@
 .art-stage .hero-scroll{z-index:3;bottom:12px}
 @keyframes outline-drift{from{stroke-dashoffset:0}to{stroke-dashoffset:-150}}
 @keyframes art-settle{from{opacity:.7;filter:brightness(.7)}to{opacity:1;filter:brightness(1)}}
+@media(max-width:950px){
+ .art-stage{height:auto;min-height:0;display:block;overflow:visible}
+ .art-canvas{width:100%;max-height:none}
+}
 @media(max-width:850px){
  .art-popover{top:36%;min-width:230px;width:36%;padding:15px}
  .art-popover h2{font-size:22px}
@@ -53,7 +58,7 @@
  .art-scene-menu .scene-instruction{width:100%;text-align:center}
 }
 @media(max-width:640px){
- .art-stage{overflow:visible}
+ .art-stage{height:auto;min-height:0;overflow:visible}
  .art-stage .hero-scroll{display:none}
  .art-hit{min-width:38px;min-height:38px}
  .art-hit:after{width:7px;height:7px}
