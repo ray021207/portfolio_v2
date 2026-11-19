@@ -9,18 +9,20 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = [
-    ROOT / "index.html",
-    ROOT / "projects/index.html",
-    ROOT / "projects/native-invasive.html",
-    ROOT / "projects/grapheqa.html",
-    ROOT / "projects/sinkronized.html",
-    ROOT / "projects/robotics.html",
-    ROOT / "projects/vision.html",
-    ROOT / "projects/health.html",
-    ROOT / "projects/conservation.html",
+# Include every active case study. The old prototype gallery (explore.html) is not linked.
+PAGES = [ROOT / "index.html"] + sorted(
+    page for page in (ROOT / "projects").glob("*.html")
+    if page.name != "explore.html"
+)
+CSS_FILES = [
+    ROOT / "assets/site-v3.css",
+    ROOT / "assets/site-refinement.css",
+    ROOT / "assets/hero-arc.css",
+    ROOT / "assets/hero-motion.css",
+    ROOT / "assets/category-pages.css",
+    ROOT / "assets/portfolio-polish.css",
+    ROOT / "assets/evidence-pages.css",
 ]
-CSS_FILES = [ROOT / "assets/site-v3.css", ROOT / "assets/site-refinement.css", ROOT / "assets/hero-arc.css", ROOT / "assets/hero-motion.css", ROOT / "assets/category-pages.css"]
 JS = ROOT / "assets/site-v3.js"
 ISSUES = []
 
@@ -137,6 +139,68 @@ if "<h3>Arizona State University</h3>" not in home:
     ISSUES.append("Missing unified ASU research role")
 if "journey-milestone--left" not in home:
     ISSUES.append("Missing professional journey timeline")
+
+# Navigation & editorial content guardrails
+if 'href="projects/index.html">Work</a>' not in home:
+    ISSUES.append("Work must navigate directly to four-category index")
+if 'class="work-card' in home or 'id="work"' in home:
+    ISSUES.append("Old homepage Selected Work cards were restored")
+if 'Reshma Panibhate <em>(Ray)</em>' not in home:
+    ISSUES.append("Preferred navigation name missing")
+if '<h3>RecoveryIQ</h3>' in home and not re.search(
+    r'<span class="award-rank">02 <small>SECOND</small></span>.*?<h3>RecoveryIQ</h3>',
+    home, flags=re.S
+):
+    ISSUES.append("RecoveryIQ hackathon placement must be second")
+for photo in [
+    "assets/evidence/volunteer/shelter.jpg",
+    "assets/evidence/volunteer/farm.jpg",
+    "assets/evidence/volunteer/fire-safety.jpg",
+]:
+    if photo not in home or not (ROOT / photo).is_file():
+        ISSUES.append(f"Original volunteering photo missing: {photo}")
+for phrase in [
+    "Foster parent, whenever I can.",
+    "A diary full of animal facts.",
+    "Painting, sometimes.",
+]:
+    if phrase not in home:
+        ISSUES.append(f"Missing Beyond-the-Lab topic: {phrase}")
+
+for page in PAGES:
+    if page.name == "index.html" and page.parent == ROOT:
+        continue
+    if not page.is_file():
+        continue
+    content = page.read_text("utf-8")
+    if 'Reshma Panibhate <em>(Ray)</em>' not in content:
+        ISSUES.append(f"Outdated masthead in {page.relative_to(ROOT)}")
+    if "https://ray021207.github.io/" in content:
+        ISSUES.append(f"Legacy portfolio link in {page.relative_to(ROOT)}")
+
+for category in ["robotics", "vision", "health", "conservation"]:
+    file = ROOT / "projects" / f"{category}.html"
+    if not file.is_file():
+        continue
+    content = file.read_text("utf-8")
+    if "Selected work,<br>" in content:
+        ISSUES.append(f"Unwanted intro reintroduced in {category} category")
+    cards = re.findall(r'<article class="category-project reveal">.*?<h3>(.*?)</h3>',
+                       content, flags=re.S)
+    if not cards:
+        ISSUES.append(f"No projects in {category} category")
+    if category == "vision" and (not cards or cards[0] != "CV-based fruit grading system"
+                                 or cards[-1] != "Clarity"):
+        ISSUES.append("Vision project ordering changed; research goes first, hackathons last")
+    if category == "conservation" and (not cards or
+        cards[0] != "Do camera-trap species classifiers survive a new camera?" or
+        cards[-1] != "Glacious"):
+        ISSUES.append("Conservation paper should be first, hackathons last")
+    if category == "health" and (not cards or cards[0] !=
+        "Chest X-ray computer-aided diagnosis" or cards[-1] != "RecoveryIQ"):
+        ISSUES.append("Healthcare research should precede hackathons")
+    if category == "robotics" and (not cards or cards[0] != "GraphEQA"):
+        ISSUES.append("GraphEQA should lead the robotics area")
 
 if ISSUES:
     print("FAILED:")
