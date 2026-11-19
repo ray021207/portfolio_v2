@@ -1,0 +1,33 @@
+name: Portfolio link and asset checks
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'projects/**'
+      - 'assets/site-v3.*'
+      - 'assets/hero/**'
+      - 'scripts/qa_static.py'
+      - '.github/workflows/site-qa.yml'
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'projects/**'
+      - 'assets/site-v3.*'
+      - 'assets/hero/**'
+      - 'scripts/qa_static.py'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check internal links, anchors, image files, and JavaScript
+        run: python scripts/qa_static.py
