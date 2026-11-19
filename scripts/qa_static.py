@@ -91,7 +91,7 @@ for css in CSS_FILES:
     if not css.exists():
         ISSUES.append(f"Missing CSS: {css.relative_to(ROOT)}")
         continue
-    for reference in re.findall(r"url\\(\\s*['\\\"]?([^)'\\\"]+)", css.read_text("utf-8")):
+    for reference in re.findall(r"url\(\s*['\"]?([^)'\"]+)", css.read_text("utf-8")):
         if reference.startswith(("http", "data:")):
             continue
         resource = (css.parent / reference).resolve()
