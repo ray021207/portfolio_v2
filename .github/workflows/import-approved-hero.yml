@@ -1,0 +1,29 @@
+name: Import approved hero artwork
+on:
+  push:
+    paths:
+      - '.github/workflows/import-approved-hero.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Fetch the exact artwork approved in chat
+        run: |
+          mkdir -p assets
+          curl --fail --location --retry 3 --silent --show-error 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/28f0bd8f-dbc0-4743-af09-cae5f9fa9db8.png' --output assets/approved-hero.png
+          echo '3c6786408a77534ffdebd35a01cbd998901bb74726db8fa145f082f9db5b2690  assets/approved-hero.png' | sha256sum -c -
+      - name: Save artwork into the portfolio repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/approved-hero.png
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add exact approved hero PNG image to repository'
+            git push
+          fi
