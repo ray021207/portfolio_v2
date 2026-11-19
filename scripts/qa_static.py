@@ -169,13 +169,20 @@ for photo in [
 ]:
     if photo not in home or not (ROOT / photo).is_file():
         ISSUES.append(f"Original volunteering photo missing: {photo}")
-for phrase in [
-    "Foster parent, whenever I can.",
-    "A diary full of animal facts.",
-    "Painting, sometimes.",
+# Verify that the owner's actual photographs—not generated substitutes—are present.
+for photo in [
+    "assets/evidence/personal/foster-puppies.jpg",
+    "assets/evidence/personal/animal-facts-journal.png",
+    "assets/evidence/personal/my-paintings.png",
 ]:
-    if phrase not in home:
-        ISSUES.append(f"Missing Beyond-the-Lab topic: {phrase}")
+    if photo not in home or not (ROOT / photo).is_file():
+        ISSUES.append(f"Personal photo missing or not referenced: {photo}")
+if home.count('class="personal-photo personal-photo--') != 3:
+    ISSUES.append("Expected exactly three personal photo cards")
+if 'href="assets/awards-compact.css?v=2"' not in home:
+    ISSUES.append("Personal photography styling is not loaded")
+if 'Foster-puppy photos, animal-journal pages and paintings will be added' in home:
+    ISSUES.append("Outdated placeholder caption after personal photo upload")
 
 for page in PAGES:
     if page.name == "index.html" and page.parent == ROOT:
