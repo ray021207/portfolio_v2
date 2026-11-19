@@ -1,0 +1,13 @@
+/* Small, high-contrast leaf cursors; applied only to fine-pointer hover devices. */
+/* The tip sits at (3, 3) so clicks land where the user points. */
+@media (hover: hover) and (pointer: fine) {
+  html, body { cursor: url("./cursor-leaf.svg") 3 3, auto; }
+  a, button, summary, select, [role="button"], [role="link"],
+  input:is([type="button"], [type="submit"], [type="reset"], [type="checkbox"], [type="radio"]),
+  label[for] { cursor: url("./cursor-leaf-link.svg") 3 3, pointer !important; }
+
+  /* Keep the expected insertion cursor on editable text. */
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]),
+  textarea, [contenteditable="true"] { cursor: text !important; }
+}
+/* Phones, tablets with touch-only input, and coarse pointing devices keep native behavior. */
