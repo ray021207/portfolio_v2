@@ -148,7 +148,7 @@ if 'class="work-card' in home or 'id="work"' in home:
 if 'Reshma Panibhate <em>(Ray)</em>' not in home:
     ISSUES.append("Preferred navigation name missing")
 if '<h3>RecoveryIQ</h3>' in home and not re.search(
-    r'<a class="award-card reveal" href="projects/recoveryiq.html">\\s*'
+    r'<a class="award-card reveal" href="projects/recoveryiq.html">\s*'
     r'<span class="award-rank">02 <small>SECOND</small></span>',
     home, flags=re.S
 ):
