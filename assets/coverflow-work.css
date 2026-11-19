@@ -1,0 +1,362 @@
+/* Work: four original category cards in a single laptop viewport.
+   Coverflow-inspired motion is custom CSS/JS, not copied third-party component code.
+   Uses only original portfolio illustrations, not stock/generated gallery images. */
+.work-coverflow-page{
+  min-height:100svh;
+  background:#e9e9de;
+  color:#1d3d31;
+  overflow-x:hidden;
+}
+.work-coverflow-page .site-nav{
+  background:#17382eea;
+  border-bottom:1px solid #e6d6b72a;
+  backdrop-filter:blur(12px);
+}
+.work-coverflow-page .nav-links [aria-current="page"]{
+  color:#edcf9e;
+}
+.work-coverflow-page .work-coverflow-main{
+  height:100svh;
+  height:100dvh;
+  padding-top:76px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+.work-coverflow-page .work-coverflow-main::before{
+  content:"";
+  position:absolute;
+  inset:76px 0 0;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 50%,#f7f4e9 0%,#e9e9de 85%),
+    linear-gradient(90deg,transparent,#dfd4bd1b,transparent);
+  pointer-events:none;
+}
+.work-coverflow-page .work-coverflow{
+  position:relative;
+  flex:1;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  width:min(1440px,100%);
+  margin-inline:auto;
+}
+.coverflow-topline{
+  padding:clamp(16px,3.7vh,36px) clamp(25px,4.3vw,67px) 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  flex-shrink:0;
+}
+.coverflow-eyebrow,.coverflow-topline-note{
+  font:11px/1.6 var(--font-mono);
+  letter-spacing:.15em;
+  color:#567362;
+}
+.coverflow-eyebrow span{color:#ae8554;margin-inline:9px;}
+.coverflow-topline-note{color:#9a815d;font-size:10px;}
+.coverflow-shell{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:1;
+  width:100%;
+  min-height:0;
+  outline:none;
+}
+.coverflow-shell:focus-visible{outline:2px solid #b58d5e;outline-offset:-8px;}
+.coverflow-stage{
+  position:relative;
+  flex:1;
+  align-self:stretch;
+  min-height:0;
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:15px;
+  align-items:center;
+  padding:clamp(14px,2vh,22px) 30px;
+  isolation:isolate;
+}
+/* Default is a real four-link grid. JavaScript enhances it with 3D transforms. */
+.coverflow-card{
+  display:block;
+  position:relative;
+  min-width:0;
+  width:100%;
+  height:min(56vh,470px);
+  max-height:100%;
+  color:#f6ebd4;
+  text-decoration:none;
+  border-radius:15px;
+  outline-offset:5px;
+}
+.coverflow-card-surface{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  height:100%;
+  width:100%;
+  border-radius:15px;
+  border:1px solid #ddbd8b61;
+  box-shadow:0 18px 28px #173b2c1b,0 0 0 1px #071a1514;
+  background:linear-gradient(138deg,#2c594b,#18372e 77%);
+  padding:clamp(18px,2vw,27px);
+  isolation:isolate;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+.coverflow-card-surface::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:-5% -30% 24%;
+  background:
+    radial-gradient(ellipse at 55% 67%,#b48d604c,transparent 50%),
+    repeating-radial-gradient(ellipse at 50% 63%,transparent 0 47px,#e7cb9135 49px,transparent 50px);
+  opacity:.72;
+  transform:rotate(-19deg);
+  pointer-events:none;
+}
+.coverflow-card--vision .coverflow-card-surface{
+  background:linear-gradient(143deg,#324f50,#182f35 80%);
+}
+.coverflow-card--health .coverflow-card-surface{
+  background:linear-gradient(142deg,#496450,#203c37 78%);
+}
+.coverflow-card--conservation .coverflow-card-surface{
+  background:linear-gradient(140deg,#5d6b4a,#273e34 76%);
+}
+.coverflow-card-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  position:relative;
+  z-index:2;
+  font:10px/1.4 var(--font-mono);
+  letter-spacing:.1em;
+  color:#dfd1b0;
+}
+.coverflow-card-art{
+  width:100%;
+  flex:1;
+  min-height:0;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+.coverflow-card-art::before{
+  content:"";
+  position:absolute;
+  width:min(65%,210px);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,#e9bf8e39,transparent 72%);
+  filter:blur(10px);
+}
+.coverflow-card-art img{
+  position:relative;
+  display:block;
+  height:clamp(110px,22vh,210px);
+  width:90%;
+  max-width:250px;
+  object-fit:contain;
+  filter:drop-shadow(0 9px 12px #07191048);
+  transition:transform .6s ease;
+}
+.coverflow-card:hover .coverflow-card-art img{transform:translateY(-6px) rotate(-2deg) scale(1.03);}
+.coverflow-card-body{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-end;
+  gap:8px;
+  flex-shrink:0;
+  min-width:0;
+}
+.coverflow-card-kicker{
+  font:9px/1.4 var(--font-mono);
+  letter-spacing:.09em;
+  color:#e1c49b;
+}
+.coverflow-card-title{
+  font:400 clamp(22px,2.4vw,32px)/1.07 var(--font-serif);
+  letter-spacing:-.045em;
+  text-wrap:balance;
+  max-width:270px;
+}
+.coverflow-card-description{
+  font:12px/1.5 var(--font-sans);
+  color:#d8e0d4;
+  max-width:255px;
+}
+.coverflow-card-foot{
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding-top:13px;
+  margin-top:3px;
+  border-top:1px solid #e1cf9e6a;
+  color:#c7d3bb;
+  font:9px/1.4 var(--font-mono);
+  letter-spacing:.035em;
+}
+.coverflow-open{color:#f6dcad;white-space:nowrap;}
+
+/* Three-dimensional presentation enabled only after all card positions are assigned. */
+.coverflow-ready .coverflow-stage{
+  display:block;
+  padding:0;
+  perspective:1350px;
+  perspective-origin:50% 43%;
+  transform-style:preserve-3d;
+}
+.coverflow-ready .coverflow-card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:var(--card-width,342px);
+  height:var(--card-height,448px);
+  max-height:calc(100% - 20px);
+  transform:
+    translate(-50%,-50%)
+    translate3d(var(--tx,0px),var(--ty,0px),var(--tz,0px))
+    rotateY(var(--ry,0deg))
+    scale(var(--card-scale,1));
+  opacity:var(--card-opacity,1);
+  z-index:var(--stack,1);
+  transform-style:preserve-3d;
+  transform-origin:50% 50%;
+  transition:transform 730ms cubic-bezier(.19,.8,.2,1),opacity 650ms ease,filter 650ms ease;
+  will-change:transform;
+}
+.coverflow-ready .coverflow-card[data-position="active"]{
+  cursor:alias;
+  filter:drop-shadow(0 25px 33px #15392845);
+}
+.coverflow-ready .coverflow-card[data-position="side"]{
+  cursor:pointer;
+  filter:saturate(.88);
+}
+.coverflow-ready .coverflow-card[data-position="far"]{
+  cursor:pointer;
+  filter:saturate(.75);
+}
+.coverflow-ready .coverflow-card[data-position="active"] .coverflow-card-surface{
+  border-color:#eec98c;
+  box-shadow:0 27px 49px #15332244,0 0 0 1px #e5c18f88;
+}
+.coverflow-ready .coverflow-card[data-position="far"] .coverflow-card-description{opacity:.6;}
+.coverflow-ready .coverflow-card[data-position="active"]:hover .coverflow-card-surface{
+  box-shadow:0 29px 55px #15332255,0 0 0 1px #f6d8a0;
+}
+.coverflow-ready .coverflow-card:focus-visible{
+  outline:3px solid #bb9157;
+  outline-offset:8px;
+}
+/* Controls live below the art, not in a second scroll viewport. */
+.coverflow-toolbar{
+  flex-shrink:0;
+  height:clamp(68px,10vh,90px);
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:0 28px 15px;
+}
+.coverflow-arrow,.coverflow-pagination button{
+  border:1px solid #b4c3b2;
+  background:#f3f0e6;
+  color:#28513c;
+  cursor:pointer;
+  transition:background .2s,border-color .2s,transform .2s,color .2s;
+}
+.coverflow-arrow{
+  width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;font:24px/1 var(--font-serif);
+}
+.coverflow-arrow:hover,.coverflow-arrow:focus-visible{
+  background:#244d3c;color:#f5e3c5;border-color:#244d3c;
+  transform:translateY(-2px);
+}
+.coverflow-pagination{display:flex;align-items:center;gap:7px;}
+.coverflow-pagination button{
+  display:grid;place-items:center;
+  width:33px;height:33px;
+  border-radius:30px;font:10px var(--font-mono);
+}
+.coverflow-pagination button[aria-current="true"]{
+  background:#244c3b;color:#f7e9ce;border-color:#244c3b;
+}
+.coverflow-pagination button:hover{border-color:#98774c;}
+.coverflow-instruction{
+  position:absolute;
+  right:clamp(22px,4.5vw,64px);
+  top:50%;
+  transform:translateY(-85%);
+  margin:0;
+  color:#667d6e;
+  font:9px/1.6 var(--font-mono);
+  letter-spacing:.025em;
+}
+.coverflow-ready .coverflow-stage{touch-action:pan-y;}
+@media(max-width:1180px){
+  .coverflow-instruction{display:none;}
+  .coverflow-topline-note{display:none;}
+}
+@media(max-width:800px){
+  .coverflow-card{height:min(52vh,430px);}
+  .coverflow-card-title{font-size:27px;}
+  .coverflow-card-art img{height:clamp(95px,22vh,185px);}
+  .coverflow-toolbar{height:78px;}
+  .coverflow-topline{padding-top:17px;}
+  .coverflow-topline-note{display:none;}
+}
+@media(max-width:560px){
+  .work-coverflow-page .work-coverflow-main{padding-top:76px;}
+  .coverflow-eyebrow{font-size:9px;letter-spacing:.11em;}
+  .coverflow-topline{padding:19px 23px 0;}
+  .coverflow-card-title{font-size:26px;}
+  .coverflow-card-description{font-size:11px;}
+  .coverflow-card-surface{padding:19px;}
+  .coverflow-card-meta{font-size:9px;}
+  .coverflow-card-foot{font-size:9px;}
+  .coverflow-ready .coverflow-card[data-position="far"]{opacity:0!important;pointer-events:none;}
+  .coverflow-toolbar{height:75px;padding-bottom:12px;}
+  .coverflow-arrow{width:38px;height:38px;}
+}
+@media(max-height:640px){
+  .coverflow-card-art img{height:clamp(75px,18vh,145px);}
+  .coverflow-card-body{gap:5px;}
+  .coverflow-card-description{font-size:10px;}
+  .coverflow-card-foot{padding-top:8px;}
+  .coverflow-topline{padding-top:11px;}
+  .coverflow-toolbar{height:62px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .work-coverflow-page .work-coverflow-main{
+    height:auto;min-height:100svh;overflow:visible;
+  }
+  .coverflow-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .coverflow-card{height:390px;}
+  .coverflow-ready .coverflow-stage{display:grid;perspective:none;transform:none;padding:20px;}
+  .coverflow-ready .coverflow-card{
+    position:relative;top:auto;left:auto;width:100%;height:390px;max-height:none;
+    transform:none!important;opacity:1!important;filter:none!important;transition:none!important;
+  }
+  .coverflow-card-art img{transition:none!important;}
+  .coverflow-toolbar{display:none;}
+}
+@media(prefers-reduced-motion:reduce) and (max-width:600px){
+  .coverflow-stage,.coverflow-ready .coverflow-stage{grid-template-columns:1fr;}
+  .coverflow-card,.coverflow-ready .coverflow-card{height:330px;}
+}
