@@ -18,19 +18,17 @@ Owned the analysis workflow for an ASU eye-tracking study investigating how visu
 
 **Methods:** Python, pandas, Tobii eye-tracking data, computer vision, data validation, regression, Spearman correlation, visual analytics.
 
-### Project 2 — Mind Science / Mindsigns: Head-Impact and Brain-Activity Study
-**Ongoing research | Study described in a supplied statement of work**
+### Project 2 — Mindsigns: Head-Impact and Brain-Activity Study
+**Ongoing research**
 
-Sole hired research assistant on this project, according to the author's description. Supporting an ASU research effort investigating whether brain-activity and physiological measurements can help assess changes following head impacts in adult athletes.
+Supporting an ASU research study investigating how brain activity and physiological signals change following head impacts in athletes. The research involves EEG recordings, wearable and head-impact sensors, balance and heart-rate variability (HRV) assessments, and app-based symptom and sleep monitoring. My work supports the study's participant-testing, data-collection, and data-organization workflow.
 
-The **study protocol** describes a planned group of approximately 45 athletes and combines baseline EEG recordings, wearable physiological monitoring, head-impact sensors, symptom questionnaires, balance assessments, and heart-rate variability measures. After a reported impact, the protocol calls for timely reassessment and up to 14 days of follow-up monitoring.
-
-**Public-facing status:** *Ongoing research.* The described sample, methods and monitoring periods are **planned procedures**, not a claim that recruitment, data collection, analysis or clinical validation is complete. Specific individual duties and delivered outcomes should be added when documented. No participant information or IRB paperwork is published here.
+**Portfolio note:** This is an ongoing study. The procedures above describe the study protocol; they are not claims of completed results or clinically validated findings. Keep participant information and IRB materials private.
 
 ### Suggested presentation
-Display these as **two expandable project stories nested under a single ASU role**, not two separate jobs. The Adidas story can show evaluated methods and preliminary findings; the Mind Science story should emphasize study aims and protocol without implying proven results.
+Display these as **two expandable project stories nested under a single ASU role**, not two separate jobs. The Adidas story can show evaluated methods and preliminary findings; the Mindsigns story should emphasize study aims and protocol without implying proven results.
 
 ### Source and editorial notes
 - Adidas: *Midsole Comfort Perception Study: Work Summary* (September 24, 2026), provided by the author.
-- Mind Science: *V0.4.4 SOW_Mindsigns_for IRB* and the author's study overview.
-- Before publishing, confirm the external-facing study/sponsor name and whether the sponsor relationship and any figures can be shared publicly. Keep recruitment materials, participant data, draft IRB content, and confidential sponsor details private.
+- Mindsigns: *V0.4.4 SOW_Mindsigns_for IRB* and the author's study overview.
+- Before publishing, confirm whether the sponsor relationship and any figures can be shared publicly. Keep recruitment materials, participant data, draft IRB content, and confidential sponsor details private.
