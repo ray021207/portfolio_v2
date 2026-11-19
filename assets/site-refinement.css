@@ -1,0 +1,245 @@
+/* Visual refinement: preserve the approved art, but keep text and portrait from colliding.
+   Portrait, words, medallion, icons remain independent PNG/SVG layers. */
+.hero-scene {
+  height:100svh;
+  min-height:610px;
+  overflow:hidden;
+  isolation:isolate;
+}
+.hero-scene::before {
+  -webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,transparent 0%,transparent 48%,#000 89%);
+  mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,transparent 0%,transparent 48%,#000 89%);
+}
+.hero-first {
+  width:min(49vw,58vh,690px);
+  top:10.5%;
+  left:50%;
+  z-index:3;
+  animation:name-in 1.05s ease-out both;
+  filter:drop-shadow(0 2px 4px #071b1480);
+}
+.hero-medallion {
+  top:51%;
+  width:min(72vw,82vh,850px);
+  max-height:85vh;
+  z-index:1;
+  animation:medallion-breathe 13s ease-in-out infinite alternate;
+}
+.hero-portrait {
+  top:53.5%;
+  width:min(31vw,42vh,500px);
+  max-height:65vh;
+  z-index:4;
+  animation:portrait-breathe 9s ease-in-out infinite alternate;
+  will-change:transform;
+}
+.hero-portrait-link {
+  --portrait-scale:1;
+  --portrait-raise:0px;
+}
+.hero-portrait-link:is(:hover,:focus-visible) {
+  --portrait-scale:1.024;
+  --portrait-raise:-7px;
+}
+.hero-portrait-link:is(:hover,:focus-visible) .hero-portrait {
+  filter:drop-shadow(0 16px 25px #05191188);
+}
+.hero-last {
+  bottom:2.2%;
+  width:min(59vw,65vh,760px);
+  z-index:6;
+  animation:last-in 1.25s ease-out both;
+  filter:drop-shadow(0 2px 4px #071b1466);
+}
+.hero-side-note {
+  top:25%;
+  left:5%;
+  width:190px;
+  font-size:10px;
+}
+.hero-photo-note {bottom:10%}
+.hero-intro {bottom:22%;right:4%;font-size:16px;max-width:185px}
+.hero-nav-art {z-index:7}
+.art-dog {left:14.3%;top:42%;width:clamp(76px,11vw,166px)}
+.art-camera {left:10.3%;top:72%;width:clamp(78px,10.4vw,154px)}
+.art-turtle {left:86.4%;top:32%;width:clamp(83px,10.7vw,164px)}
+.art-deer {left:91%;top:62%;width:clamp(75px,9.2vw,136px)}
+.art-fern {z-index:2;left:21%;bottom:13%;width:clamp(80px,13vw,190px)}
+.hero-scroll-cue {bottom:15px;right:3.5%}
+@keyframes medallion-breathe {
+  0% {transform:translate(-50%,-50%) scale(.99) rotate(-.6deg)}
+  100% {transform:translate(-50%,calc(-50% - 5px)) scale(1.008) rotate(.6deg)}
+}
+@keyframes portrait-breathe {
+  0% {transform:translate(-50%,calc(-50% + 2px)) scale(var(--portrait-scale))}
+  50% {transform:translate(-50%,calc(-50% - 5px + var(--portrait-raise))) scale(var(--portrait-scale))}
+  100% {transform:translate(-50%,calc(-50% + var(--portrait-raise))) scale(var(--portrait-scale))}
+}
+/* An editorial trail: cards alternate around a quiet central line. */
+.journey-section {
+  position:relative;
+  background:#13362d;
+  color:#f3f0e6;
+  overflow:hidden;
+}
+.journey-section::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:url('./hero/background.png');
+  background-size:cover;
+  background-position:center;
+  opacity:.085;
+  filter:grayscale(35%);
+}
+.journey-section > .container {position:relative}
+.journey-heading {text-align:center;max-width:840px;margin:0 auto 68px}
+.journey-section .section-label {color:#d6bb8c}
+.journey-heading .display-title {color:#f5ead4}
+.journey-heading .journey-lead {
+  font-size:17px;
+  line-height:1.75;
+  color:#c8d6c5;
+  max-width:650px;
+  margin:24px auto 0;
+}
+.journey-track {position:relative;padding:6px 0 30px}
+.journey-track::before {
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:linear-gradient(180deg,transparent,#c79b65 7%,#648a76 88%,transparent);
+}
+.journey-milestone {
+  position:relative;
+  min-height:290px;
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:28px;
+}
+.journey-milestone--right {justify-content:flex-end}
+.journey-marker {
+  position:absolute;
+  left:50%;
+  top:39px;
+  z-index:3;
+  transform:translateX(-50%);
+  width:49px;height:49px;
+  border:1px solid #caab78;
+  border-radius:50%;
+  background:#244c3c;
+  display:grid;
+  place-items:center;
+  box-shadow:0 0 0 9px #13362d;
+}
+.journey-marker span {font:12px var(--font-mono);color:#f4e0be}
+.journey-card {
+  background:#f0eadb;
+  color:#193a30;
+  border-radius:13px;
+  border:1px solid #d1bb94;
+  box-shadow:0 22px 50px #071a1540;
+  padding:clamp(23px,3.3vw,42px);
+  width:calc(50% - 59px);
+  position:relative;
+}
+.journey-card::after {
+  content:"";
+  width:18px;height:18px;
+  position:absolute;
+  right:-10px;top:53px;
+  background:#f0eadb;
+  transform:rotate(45deg);
+  border-right:1px solid #d1bb94;
+  border-top:1px solid #d1bb94;
+}
+.journey-milestone--right .journey-card::after {left:-10px;right:auto;border-left:1px solid #d1bb94;border-bottom:1px solid #d1bb94;border-top:0;border-right:0}
+.journey-card-top {display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-bottom:1px solid #c4c9b5;padding-bottom:14px;margin-bottom:22px}
+.journey-date {font:600 12px var(--font-mono);color:#2a6356}
+.journey-category {font:10px var(--font-mono);text-transform:uppercase;letter-spacing:.09em;color:#8a6f4a}
+.journey-card h3 {font:400 clamp(27px,3vw,43px)/1.12 var(--font-serif);letter-spacing:-.04em;margin:0 0 9px}
+.journey-subtitle {font:11px/1.6 var(--font-mono)!important;letter-spacing:.035em;color:#607c68!important;margin:0 0 19px!important}
+.journey-card > p:not(.journey-subtitle) {font-size:14px;line-height:1.8;color:#455e50;margin:0 0 5px}
+.journey-detail {border-top:1px solid #ccd2c1;padding-top:14px;margin-top:18px}
+.journey-detail summary {cursor:pointer;display:flex;justify-content:space-between;gap:14px;font-size:12px;font-weight:700;color:#275d4e;list-style:none}
+.journey-detail summary::-webkit-details-marker{display:none}
+.journey-detail summary span{transition:transform .2s}
+.journey-detail[open] summary span{transform:rotate(45deg)}
+.journey-detail > p {margin:12px 0 0;font-size:13px;line-height:1.7;color:#50685b}
+.journey-studies {margin-top:23px;border-top:1px solid #bdcbbb;display:grid;gap:15px;padding-top:18px}
+.journey-studies > div + div {border-top:1px solid #c9d2bf;padding-top:16px}
+.journey-study-index {font:10px var(--font-mono);color:#9a7853;letter-spacing:.11em;display:block;margin-bottom:7px}
+.journey-studies strong {font:400 19px/1.27 var(--font-serif);display:block}
+.journey-studies p {font-size:12px;line-height:1.65;color:#52695a;margin:8px 0 0}
+.journey-end {
+  text-align:center;
+  max-width:650px;
+  margin:0 auto;
+  border-top:1px solid #708a715e;
+  padding-top:43px;
+}
+.journey-end span {color:#c3a374;font:11px var(--font-mono);letter-spacing:.12em}
+.journey-end p {font:400 clamp(24px,3vw,38px)/1.3 var(--font-serif);color:#f5ead8;margin:17px 0 23px}
+.journey-end a {display:inline-flex;gap:15px;align-items:center;text-decoration:none;border-bottom:1px solid #bc9973;font-size:13px;padding-bottom:7px}
+.reveal.reveal-from-left {transform:translate3d(-43px,23px,0)}
+.reveal.reveal-from-right {transform:translate3d(43px,23px,0)}
+.reveal.is-visible {opacity:1;transform:translate3d(0,0,0)}
+/* Keep the same restrained material and geometry beyond the landing page. */
+.intro-strip {background:#e7e3d3}
+.about-section {background:#e3e8db}
+.work-card {border-radius:12px}
+.work-card .work-art {border-bottom:1px solid #d2c3aa55}
+.work-copy h3 {text-wrap:balance}
+.section-head .display-title {text-wrap:balance}
+.contact-section {background:#e2dfd1}
+@media (max-width:1050px) {
+  .hero-first {width:min(60vw,51vh,670px);top:11%}
+  .hero-portrait {width:min(39vw,42vh,480px)}
+  .hero-medallion {width:min(82vw,80vh,790px)}
+  .hero-last {width:min(68vw,59vh,700px);bottom:2.8%}
+  .hero-side-note,.hero-intro {display:none}
+}
+@media (max-width:760px) {
+  .hero-scene {min-height:590px}
+  .hero-first {top:12%;width:min(84vw,50vh,620px)}
+  .hero-portrait {top:52.5%;width:min(68vw,42vh,470px);max-height:63vh}
+  .hero-medallion {top:49%;width:min(105vw,77vh,680px)}
+  .hero-last {bottom:5%;width:min(89vw,57vh,650px)}
+  .art-dog {left:12%;top:38%;width:clamp(66px,17vw,108px)}
+  .art-camera {left:12%;top:73%;width:clamp(66px,18vw,112px)}
+  .art-turtle {left:88%;top:34%;width:clamp(70px,19vw,119px)}
+  .art-deer {left:88%;top:68%;width:clamp(63px,17vw,108px)}
+  .art-fern {left:16%;bottom:15%;width:25vw;opacity:.55}
+  .hero-photo-note {display:none}
+  .journey-heading {margin-bottom:53px;text-align:left}
+  .journey-heading .journey-lead {margin-left:0}
+  .journey-track::before {left:25px}
+  .journey-milestone {min-height:0;margin-bottom:27px}
+  .journey-milestone--right {justify-content:initial}
+  .journey-marker {left:25px;top:25px;width:41px;height:41px;box-shadow:0 0 0 6px #13362d}
+  .journey-card {margin-left:72px;width:calc(100% - 72px);padding:25px 22px}
+  .journey-card::after,.journey-milestone--right .journey-card::after {left:-9px;right:auto;top:37px;border:0;border-left:1px solid #d1bb94;border-bottom:1px solid #d1bb94}
+  .reveal.reveal-from-left,.reveal.reveal-from-right {transform:translateY(25px)}
+  .reveal.is-visible {transform:none}
+}
+@media (max-width:460px) {
+  .hero-scene {height:100svh;min-height:550px}
+  .hero-first {top:13%;width:min(94vw,47vh)}
+  .hero-portrait {top:52%;width:min(78vw,42vh);max-height:63vh}
+  .hero-medallion {top:49%;width:min(123vw,73vh)}
+  .hero-last {bottom:7%;width:min(94vw,56vh)}
+  .art-dog {left:12%;top:38%;width:21vw}
+  .art-camera {left:13%;top:72%;width:22vw}
+  .art-turtle {left:88%;top:35%;width:22vw}
+  .art-deer {left:88%;top:67%;width:19vw}
+  .hero-star {right:13%;top:22%}
+}
+@media (prefers-reduced-motion:reduce) {
+  .hero-medallion,.hero-portrait,.hero-first,.hero-last {animation:none!important}
+  .reveal,.reveal.reveal-from-left,.reveal.reveal-from-right {opacity:1!important;transform:none!important}
+  .hero-portrait {will-change:auto}
+}
