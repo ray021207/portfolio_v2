@@ -3,3 +3,49 @@
 @media(max-width:800px){.category-navigation{top:66px}.category-hero-grid{grid-template-columns:minmax(0,1fr) 130px;gap:15px}.category-hero-grid img{max-height:170px}.category-intro .container{grid-template-columns:1fr;gap:7px}.category-section-header{display:block}.category-experience-row{grid-template-columns:40px 1fr}.category-experience-row .project-type{grid-column:2}.category-hero{padding-bottom:60px}}
 @media(max-width:550px){.category-hero-grid{grid-template-columns:1fr}.category-hero-grid img{height:155px;width:160px;justify-self:end;margin-top:-20px}.category-pillnav a{font-size:10px;padding:8px 10px}.category-project{grid-template-columns:36px 1fr;gap:12px;padding:27px 0}.category-section-header{margin-bottom:25px}.category-experience{padding:70px 0}.category-experience-row{gap:10px}.category-overview-grid{grid-template-columns:1fr}.category-overview-card{min-height:380px}}
 @media(prefers-reduced-motion:reduce){.category-hero-grid img,.category-overview-card{transition:none!important}}
+
+/* The project index should feel like a lightweight doorway, not another full-screen hero. */
+.projects-overview .subpage-header{
+  padding:126px 0 42px;
+  background:#e6e7da;
+  color:#183e31;
+  border-bottom:1px solid #c5ceba;
+}
+.projects-overview .subpage-header::before{opacity:.035;filter:grayscale(55%)}
+.projects-overview .subpage-header .section-label{color:#7c6e4c}
+.projects-overview .subpage-header .crumb{color:#456953}
+.projects-overview .subpage-header .display-title{font-size:clamp(43px,5.6vw,74px);max-width:1100px}
+.projects-overview .subpage-header> .container>p:last-child{font-size:15px;color:#5c7460;margin-bottom:0}
+.projects-overview .page-section{padding-top:55px}
+/* Individual categories begin their work quickly; remove superfluous second intro. */
+.project-category .category-hero{padding:125px 0 48px}
+.project-category .category-hero .display-title{font-size:clamp(43px,5.6vw,76px);line-height:1.07}
+.project-category .category-hero .container>div>p:not(.section-label){max-width:610px;font-size:15px}
+.project-category .category-hero-grid{grid-template-columns:minmax(0,1fr) clamp(120px,21vw,260px)}
+.project-category .category-hero-grid img{max-height:230px}
+.project-category .category-list-section{padding-top:48px}
+.project-category .category-projects-caption{margin:0 0 25px}
+.project-category .category-project h3{font-size:clamp(30px,3vw,40px)}
+.project-category .category-project{padding-top:28px;padding-bottom:29px}
+.category-overview-card{position:relative;overflow:hidden}
+.category-overview-card::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;border:1px solid #c9a676;opacity:0;transition:opacity .35s}
+.category-overview-card:hover::after,.category-overview-card:focus-visible::after{opacity:1}
+.category-overview-card img{transition:transform .65s cubic-bezier(.2,.76,.25,1)}
+.category-overview-card:hover img,.category-overview-card:focus-visible img{transform:translateY(-9px) rotate(-3deg) scale(1.045)}
+@media(max-width:800px){
+ .projects-overview .subpage-header{padding:108px 0 33px}
+ .project-category .category-hero{padding:105px 0 45px}
+ .project-category .category-hero-grid{grid-template-columns:1fr 120px}
+ .project-category .category-hero-grid img{max-height:135px}
+}
+@media(max-width:560px){
+ .projects-overview .subpage-header .display-title{font-size:clamp(39px,11vw,60px)}
+ .projects-overview .page-section{padding-top:36px}
+ .project-category .category-hero-grid{grid-template-columns:1fr}
+ .project-category .category-hero-grid img{height:100px;width:130px;justify-self:end;margin-top:-45px}
+ .project-category .category-hero .display-title{font-size:clamp(41px,11vw,62px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .category-overview-card::after,.category-overview-card img{transition:none!important}
+ .category-overview-card:hover img{transform:none}
+}
