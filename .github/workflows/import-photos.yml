@@ -1,0 +1,31 @@
+name: Import original portrait photos
+on:
+  push:
+    paths:
+      - ".github/workflows/import-photos.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-originals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import user-supplied portrait photographs
+        run: |
+          set -euo pipefail
+          mkdir -p assets/portraits
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/b99eb42c-4f55-4623-a515-86d02348e5e7.jpg' -o assets/portraits/reshma-mountains.jpg
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/53020d90-44fc-4c71-ae2a-68b737b309ae.jpg' -o assets/portraits/reshma-portrait.jpg
+          echo 'cf81382506c3b06246f1676c34423735f8fe3754d42aaabdf99be08e77c7bacf  assets/portraits/reshma-mountains.jpg' | sha256sum --check
+          echo '65afcac886f68771262f9d6fd7ec4406603255bb4499b142e564c76c306b70d2  assets/portraits/reshma-portrait.jpg' | sha256sum --check
+      - name: Commit verified originals
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/portraits/
+          if ! git diff --cached --quiet; then
+            git commit -m "Store original user portrait photos for portfolio"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
