@@ -1,0 +1,50 @@
+name: Import separate approved hero layers
+on:
+  push:
+    paths:
+      - '.github/workflows/import-hero-layers.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-layers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download and checksum every separate hero layer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/hero
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/ad89e4ea-a97f-41c8-a6bf-9c4f1dfcbd6c.png' -o 'assets/hero/background.png'
+          echo 'af3aecf5ff815fb60a3396734cc032f97ebceda7cdbfb769b6a706706f4179ac  assets/hero/background.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/c7122396-2d3b-407f-9a9c-753fa181d968.png' -o 'assets/hero/portrait.png'
+          echo '0504ddd5fadc3b0c24ed980d5a9601e6a6fe50caebcd29b33faf0726cd25d60d  assets/hero/portrait.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/8df71804-ad26-45c4-8e67-3fd2c1f0bf36.png' -o 'assets/hero/robot-dog.png'
+          echo '4f018e80d2246cc3170bfb9938d4482194b3f7504bd1f0b3197d7bcb5a057b67  assets/hero/robot-dog.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/3d2509bf-9123-48a0-8649-fdd95ce85f8a.png' -o 'assets/hero/camera-trap.png'
+          echo 'fb549b3a5a9be12690817a88e02100e482d70161b0b6076bd057077c8b4b96ca  assets/hero/camera-trap.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/bccbe0a5-a855-4273-be9f-91186797d8fd.png' -o 'assets/hero/sea-turtle.png'
+          echo 'af60803bce076da841a1cbf5e8949a917dbb9b918df0cd5cc3065a2e8c22a8e4  assets/hero/sea-turtle.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/f909577d-fd0a-4b36-a7a8-366276862653.png' -o 'assets/hero/deer.png'
+          echo '52abcbe02517b4bcd436054af8f4549fdbec80fadfbb1d0287f554e9269e2c85  assets/hero/deer.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/8c680653-9fa0-4fbf-96c3-71b366807986.png' -o 'assets/hero/bird.png'
+          echo 'adb68e434fe0334500c18ffa2fef2bed156007fd3b3af879aa04f0c4f5ca924b  assets/hero/bird.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/78414293-6726-4acc-a833-79eb6a26e798.png' -o 'assets/hero/fern.png'
+          echo '127c70edfb5802901177348f5241d522d7563819abf93b11e5de2f7169b3438d  assets/hero/fern.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/798258d7-3b14-4a1b-9849-07ff169c2796.png' -o 'assets/hero/name-reshma.png'
+          echo 'bdb6f453ff9b7ac57759d59e5772204e6f5678f901653b7d1596b289fddb7a7d  assets/hero/name-reshma.png' | sha256sum -c -
+          curl -fLSs --retry 3 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/852dd045-9765-4361-949a-6b33063495ab.png' -o 'assets/hero/name-panibhate.png'
+          echo '07ca9f7e1caef571d5a30044e82dd451003207157dc8ff5ceea634f676268519  assets/hero/name-panibhate.png' | sha256sum -c -
+      - name: Commit the 10 validated image files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/hero
+          if ! git diff --cached --quiet; then
+            git commit -m "Add 10 separate image layers for future interactive hero"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
