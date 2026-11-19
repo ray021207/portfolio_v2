@@ -6,6 +6,7 @@ on:
       - 'index.html'
       - 'projects/**'
       - 'assets/site-v3.*'
+      - 'assets/site-refinement.css'
       - 'assets/hero/**'
       - 'scripts/qa_static.py'
       - '.github/workflows/site-qa.yml'
@@ -14,6 +15,7 @@ on:
       - 'index.html'
       - 'projects/**'
       - 'assets/site-v3.*'
+      - 'assets/site-refinement.css'
       - 'assets/hero/**'
       - 'scripts/qa_static.py'
 permissions:
