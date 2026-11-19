@@ -23,3 +23,48 @@
 .hero-portrait-link:hover .portrait-tooltip,.hero-portrait-link:focus-visible .portrait-tooltip{opacity:1;transform:translateY(0)}
 @media(max-width:730px){.portrait-tooltip{left:61%;top:67%}}
 @media(prefers-reduced-motion:reduce){.hero-portrait-link .hero-portrait,.portrait-tooltip{transition:none!important}}
+
+/* Fluid editorial movement: no wheel handlers, no scroll snapping, no third-party scroll engine. */
+body::before{
+  content:"";position:fixed;z-index:110;top:0;left:0;height:2px;width:100%;
+  background:linear-gradient(90deg,#c19a6e,#f5e3b7);
+  transform:scaleX(var(--reading-progress,0));transform-origin:left;
+  pointer-events:none;box-shadow:0 0 9px #c69b6a55;
+}
+.reveal{transition-property:opacity,transform,filter;transition-duration:.85s;transition-timing-function:cubic-bezier(.2,.75,.25,1)}
+.reveal:not(.is-visible){filter:blur(1.2px)}
+.reveal.is-visible{filter:blur(0)}
+.category-project.reveal:nth-child(odd):not(.is-visible),
+.evidence-content section.reveal:nth-child(odd):not(.is-visible){transform:translate3d(-28px,23px,0)}
+.category-project.reveal:nth-child(even):not(.is-visible),
+.evidence-content section.reveal:nth-child(even):not(.is-visible){transform:translate3d(28px,23px,0)}
+.award-card.reveal:nth-child(2){transition-delay:.09s}
+.award-card.reveal:nth-child(3){transition-delay:.18s}
+.beyond-photo-grid figure{transition:transform .55s cubic-bezier(.2,.65,.25,1),box-shadow .5s}
+.beyond-photo-grid figure:hover{transform:translateY(-4px);box-shadow:0 12px 30px #17382e22}
+.category-project{scroll-margin-top:150px}
+.journey-milestone{scroll-margin-top:100px}
+/* Native scroll-linked section accents are progressive enhancement. */
+@keyframes editorial-figure-rise{
+  from{opacity:.78;clip-path:inset(0 0 13% 0);transform:translateY(13px)}
+  to{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(0)}
+}
+@keyframes editorial-header-underline{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:no-preference) and (min-width:760px){
+ @supports(animation-timeline:view()){
+   .evidence-gallery figure,.beyond-photo-grid figure{
+     animation:editorial-figure-rise linear both;
+     animation-timeline:view(block);
+     animation-range:entry 0% cover 35%;
+   }
+ }
+}
+@media(max-width:760px){
+ .category-project.reveal:not(.is-visible),.evidence-content section.reveal:not(.is-visible){transform:translateY(20px)}
+ .award-card.reveal:nth-child(n){transition-delay:0s}
+}
+@media(prefers-reduced-motion:reduce){
+ body::before{display:none}
+ .reveal,.reveal:not(.is-visible),.reveal.is-visible{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+ .beyond-photo-grid figure{animation:none!important;transition:none!important}
+}
