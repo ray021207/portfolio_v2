@@ -10,7 +10,19 @@ These files are **reused original project material and photographs**, not AI-gen
 | `volunteer/farm.jpg` | `ray021207/ray021207.github.io/assets/media/farm.jpg` |
 | `volunteer/fire-safety.jpg` | `ray021207/ray021207.github.io/assets/media/fire-safety.jpg` |
 
-The photos depict published community activities. Their reuse here does **not** automatically grant anyone else a license to redistribute them. No foster-puppy photographs, animal-diary pages, or personal paintings have been added; those will come from the portfolio owner.
+The photos depict published community activities. Their reuse here does **not** automatically grant anyone else a license to redistribute them.
+
+## Personal photographs uploaded by the portfolio owner (2026-11-19)
+
+These are the **original uploaded photographs**; the website applies only CSS cropping, mild color adjustment, and a hover effect. No AI-generated reconstruction replaces them.
+
+| This repository | Original owner upload | Git blob SHA |
+| --- | --- | --- |
+| `personal/foster-puppies.jpg` | `IMG_3162.JPG` — two foster puppies on a lap | `e3ae4879b017a9ec45eb02aa18ce838308c6fe50` |
+| `personal/animal-facts-journal.png` | `image(20261119-205116).png` — handwritten octopus journal | `63e67aab9c018d16fde9c2896de1f63110edf6ff` |
+| `personal/my-paintings.png` | `image(20261119-205104).png` — wall of the owner's paintings | `b2af20e18333dbb873ae4b38c8825dd00e0b8597` |
+
+The import workflow verifies the original SHA-256 hashes before committing. These photos represent the author's personal life and are not free-to-reuse dataset assets.
 
 ## Research figures / screenshots
 
