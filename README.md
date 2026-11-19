@@ -1,45 +1,58 @@
-# Reshma Panibhate — Portfolio V2
+# Reshma Panibhate (Ray) — Portfolio
 
-A portrait-led, editorial portfolio for computer vision, robotics, machine learning and conservation research. This repository is the current working site and does **not** replace the older `ray021207.github.io` repo.
+**Live site:** https://ray021207.github.io/portfolio_v2/
 
-**Preview:** https://ray021207.github.io/portfolio_v2/
+A layered, portrait-led, editorial portfolio covering robotics, computer vision, healthcare AI, and conservation/geospatial research. The approved visual style uses forest green, warm ivory, copper, and engraved botanical imagery.
 
-## Current implementation
+## Current structure
 
-- **Layered hero**, using individual transparent assets in `assets/hero/`: background, mountain medallion, actual approved portrait, responsive curved SVG name lettering, robot dog, camera trap, sea turtle and deer. The oversized fern overlay was removed because it looked distorted.
-- The **portrait** links to About. Illustrations are accessible links: robot dog → GraphEQA, turtle/deer/camera trap → conservation AI. These are *temporary thematic mappings*; final icon-to-project associations await approval.
-- Desktop top navigation and mobile menu, native wheel scrolling without hijacking, gentle intro and on-scroll reveal, reduced-motion fallback.
-- **Selected work** and an alternating **professional journey** timeline with transparent, evidence-backed descriptions.
-- **Tikkun Olam Makers** appears only as a 2025 student/community-leadership milestone; the professional roles are **Monark Health (Health Tracker)** and **ASU research**.
-- **Monark Health and Health Tracker are the same freelance project** and must not be listed twice. **Adidas and Mindsigns are distinct studies under one ASU research position**, shown in that order.
-- **All projects** index with category filters.
-- New case studies: `projects/native-invasive.html`, `projects/grapheqa.html`, `projects/sinkronized.html`.
-- `scripts/qa_static.py` and a GitHub Actions workflow check internal links and critical assets.
+The home page uses the approved portrait, an independently scalable mountain medallion, and two curved inline SVG name arcs. **Work** goes straight to `projects/index.html`: there is no duplicate work-card section on the homepage. **Journey** opens the approved professional timeline.
 
-## Important design details
+The four interactive hero illustrations lead to individual, filtered subject areas:
 
-The hero is **composed from separate images**, not a flattened poster. We can scale or rearrange the medallion, photo, name and icons independently to fit laptop and mobile viewports. The two name arcs are inline SVG text paths in `index.html`, with positioning in `assets/hero-arc.css`; the old oversized PNG wordmarks are no longer rendered. The source SVG for the medallion is a wrapper around raster art rather than a manually vector-traced image.
+| Illustration | Project area |
+| --- | --- |
+| Robot dog | `projects/robotics.html` — Robotics & Embedded AI |
+| Deer in detection brackets | `projects/vision.html` — Computer Vision & Applied AI |
+| Medical monitor (replaces the sea turtle) | `projects/health.html` — Healthcare, CV & AI |
+| Camera trap | `projects/conservation.html` — Conservation & Geospatial AI |
 
-The original background contains a medallion. The new layered hero fades the center of that background while preserving the decorative corners, then uses `assets/hero/mountain-medallion.png` as its independent central focal layer.
+Each project leads to a **local case-study page** in this repository rather than the original portfolio. Across categories, published research and coursework come before hackathon prototypes. Every hackathon item is labeled accordingly.
 
-The user will provide additional design references; treat those as the next visual fidelity target. Do not replace this artistic direction with generic gradient blobs, emoji decorations or AI-looking stock artwork.
+In the healthcare page, **professional experience is shown first**: Adidas and Mindsigns are separate studies within the **one ASU Center for Engagement Science research role**; Monark Health and Health Tracker are **the same freelance project**. Tikkun Olam Makers is a student/community milestone, not a paid employer.
 
-## Known follow-ups
+## Editorial motion and scrolling
 
-- Adjust layout and page transitions against the incoming reference websites after visual review; the current hero has responsive sizing and gentle independent portrait/medallion motion in `assets/site-refinement.css`.
-- Verify the experience timeline and full name on the live laptop/mobile website; static visual mockups do not replace real-browser testing.
-- Confirm final icon → project mappings with the author.
-- Curate and expand the full project listing and original images/screenshots, especially NASA's actual website UI.
-- Replace the current résumé link (to the old repository) with the latest approved résumé file once it's explicitly selected for publication.
-- Validate actual GitHub Pages rendering on target browsers/devices; file and JavaScript checks alone cannot prove pixel-perfect layout.
-- Keep research figures and production claims accurate; never merge the Adidas and Mindsigns ASU research projects into separate employers.
+- `assets/hero-motion.css` animates only the approved icon layers: robot footsteps, camera-trap scanning, medical ECG trace, and a computer-vision snapshot/detection effect.
+- The medallion and portrait have subtle independent motion; all four illustrations remain keyboard- and touch-accessible links.
+- `assets/site-v3.js` uses **passive** scroll observation and a progress line, not an intercepted wheel/touch event or an altered scroll rate.
+- Scrolling reveals are progressive, with optional view-timeline transitions in supported browsers.
+- `prefers-reduced-motion` suppresses decorative movement.
 
-## Run
+## Evidence, photography, and rights
 
-This is a static site. Start a web server in the repository root:
+Case studies contain original project figures and measured data, including the camera-trap location-shift plots, the CheXpert evaluation chart, GraphEQA ROS2 screenshot, and four-step robotic-arm maze images.
+
+**Beyond the Lab** shows original shelter, community-farm, and fire-safety photographs from the author's previous portfolio. The writing also covers fostering, an animal-facts diary (especially pandas and giant oceanic manta rays), and painting. **No AI-generated hobby or evidence imagery is added.** Personal puppy, diary, and painting images await the author's own photos.
+
+Asset provenance and licensing considerations are documented at `assets/evidence/README.md`. Publicly visible GitHub files are **not** automatically public domain; preserve original credits, source licenses, and privacy.
+
+Awards currently shown: WasteWise — first place; Glacious — second place; RecoveryIQ — second place.
+
+## Quality checks
+
+`python scripts/qa_static.py` validates every active HTML page (excluding the old unlinked `projects/explore.html` prototype), relative asset and anchor links, JavaScript syntax, the four hero routes, correct author name, research-first project ordering, RecoveryIQ placement, and original volunteering image references.
+
+The GitHub Actions workflow in `.github/workflows/site-qa.yml` executes the static checks on relevant changes.
+
+To preview locally, serve the repository from its root:
 
 ```bash
 python -m http.server 8000
 ```
 
-Visit http://localhost:8000/ and run `python scripts/qa_static.py` for the smoke test.
+## Next visual review
+
+Confirm the layout in an actual desktop and mobile browser, especially side-text/icon separation and scroll pacing. Add the owner's real fostering, field-journal, and painting photos when supplied. Do not invent their images, swap them for generated art, or claim a clinical model or hackathon demo is a deployed production service.
+
+The official NASA Space Apps team website remains linked from `projects/sinkronized.html`, with explicit limitations on scientific interpretation.
