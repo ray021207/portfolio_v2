@@ -1,0 +1,35 @@
+name: Import original personal photographs
+on:
+  push:
+    paths:
+      - .github/workflows/import-personal-photos.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import-photographs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and verify the three user-supplied photos
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/evidence/personal
+          curl -fLSs --retry 4 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/e3ca8875-719e-42d4-b424-8c52c0daab0d.jpg' -o assets/evidence/personal/foster-puppies.jpg
+          curl -fLSs --retry 4 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/6af04987-d3ec-44b8-892b-f54f30c03e3a.png' -o assets/evidence/personal/my-paintings.png
+          curl -fLSs --retry 4 'https://d2ol7oe51mr4n9.cloudfront.net/user_3MJElhErczOSvirV6TlCxTMn1ir/6edad641-f03a-4ff3-978a-0d56657ee577.png' -o assets/evidence/personal/animal-facts-journal.png
+          echo '082c35536256a83a0d3bae004f18ec7f8570e7d3c5a92dc8cc0f2e6da05f9fdb  assets/evidence/personal/foster-puppies.jpg' | sha256sum -c -
+          echo 'da2c5fe0e1bd08a57c1b2aa206fdde69f8a88962fe0736f3608cb5c2bf274a6f  assets/evidence/personal/my-paintings.png' | sha256sum -c -
+          echo '1cb72c5c48ce66bdc6e127b160a091af0988996308ed43eed03e237f2191dddd  assets/evidence/personal/animal-facts-journal.png' | sha256sum -c -
+      - name: Commit original images to assets/evidence/personal
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/evidence/personal/
+          if ! git diff --cached --quiet; then
+            git commit -m "Add original foster, paintings and wildlife diary photographs"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
