@@ -8,6 +8,8 @@ on:
       - 'assets/site-v3.*'
       - 'assets/site-refinement.css'
       - 'assets/hero-arc.css'
+      - 'assets/hero-motion.css'
+      - 'assets/category-pages.css'
       - 'assets/hero/**'
       - 'scripts/qa_static.py'
       - '.github/workflows/site-qa.yml'
@@ -18,6 +20,8 @@ on:
       - 'assets/site-v3.*'
       - 'assets/site-refinement.css'
       - 'assets/hero-arc.css'
+      - 'assets/hero-motion.css'
+      - 'assets/category-pages.css'
       - 'assets/hero/**'
       - 'scripts/qa_static.py'
 permissions:
