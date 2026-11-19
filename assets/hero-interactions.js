@@ -120,7 +120,7 @@
         if (event.pointerType === 'mouse' || event.pointerType === 'pen') open(topic, control, false);
       });
       control.addEventListener('pointerleave', deferClose);
-      control.addEventListener('focus', () => open(topic, control, true));
+      control.addEventListener('focus', () => open(topic, control, false));
     }
     control.addEventListener('click', () => {
       if (hero.dataset.open === 'true' && selected === topic && pinned) close(false);
