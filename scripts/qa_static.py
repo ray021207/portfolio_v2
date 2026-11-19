@@ -21,6 +21,7 @@ CSS_FILES = [
     ROOT / "assets/hero-motion.css",
     ROOT / "assets/category-pages.css",
     ROOT / "assets/portfolio-polish.css",
+    ROOT / "assets/awards-compact.css",
     ROOT / "assets/evidence-pages.css",
 ]
 JS = ROOT / "assets/site-v3.js"
@@ -153,6 +154,14 @@ if '<h3>RecoveryIQ</h3>' in home and not re.search(
     home, flags=re.S
 ):
     ISSUES.append("RecoveryIQ hackathon placement must be second")
+if 'class="page-section beyond-page" id="beyond"' not in home:
+    ISSUES.append("Beyond-the-Lab viewport section is missing")
+if 'href="assets/awards-compact.css?v=1"' not in home:
+    ISSUES.append("Compact awards layout stylesheet is not loaded")
+if 'class="awards-next" href="#beyond"' not in home:
+    ISSUES.append("Awards-to-Beyond navigation is missing")
+if home.count('class="award-card reveal"') != 3:
+    ISSUES.append("Awards must have exactly three project cards")
 for photo in [
     "assets/evidence/volunteer/shelter.jpg",
     "assets/evidence/volunteer/farm.jpg",
