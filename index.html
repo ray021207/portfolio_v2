@@ -22,62 +22,57 @@ section{padding:105px 0}.eyebrow{font:11px var(--mono);color:var(--teal);letter-
 @keyframes from-left{from{opacity:0;transform:translateX(-12%) rotate(-3deg)}to{opacity:1;transform:translateX(0)}}@keyframes from-right{from{opacity:0;transform:translateX(12%) rotate(2deg)}to{opacity:1;transform:translateX(0)}}@keyframes appear{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:none}}
 @media(max-width:860px){.menu{gap:13px}.hero-left{top:20%;left:4%}.hero-right{right:4%}.intro-grid{gap:5%}.hacks{grid-template-columns:1fr 1fr}}@media(max-width:680px){.nav-toggle{display:block}.menu{display:none;position:absolute;top:74px;left:0;right:0;padding:20px 25px;background:var(--forest);flex-direction:column;align-items:stretch}.menu.open{display:flex}.hero{min-height:700px;max-height:820px}.hero-name{top:31%}.hero-name span{font-size:clamp(56px,13vw,96px)}.hero-name span:last-child{margin-top:285px}.portrait{top:34%;width:270px;height:365px}.hero-left{top:16%;font-size:10px}.hero-left b{font-size:18px}.hero-right{bottom:15%;right:7%;font-size:14px;max-width:135px}.hero-actions{left:5%;bottom:5%}.hero-decor.a{right:7%;top:21%}.hero-decor.b{left:6%;top:40%}.hero-decor.c{right:5%;top:50%}.hero-decor.d{left:5%;bottom:22%}.intro-grid,.project-grid,.xp-grid{grid-template-columns:1fr}.intro-photo{height:380px}.hacks{grid-template-columns:1fr}section{padding:76px 0}.cover{height:240px}.wrap{width:min(1200px,calc(100% - 34px))}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
-</style><style id="approved-hero-style">
-/* This section intentionally renders the exact chosen art, without rebuilding its lettering or portrait. */
-header{position:relative;background:#102d26;backdrop-filter:none}
-.approved-hero{min-height:0;height:auto;max-height:none;aspect-ratio:3/2;background:#102e26;display:block;overflow:hidden}
-.approved-hero:after{display:none}
-.approved-art{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
-.copper-illustration{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.13;animation:orbit-breathe 16s ease-in-out infinite alternate} @keyframes orbit-breathe{from{opacity:.06;transform:translate3d(-2px,1px,0)}to{opacity:.17;transform:translate3d(3px,-2px,0)}} .copper-glow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.38;mix-blend-mode:screen}
-.copper-sweep{fill:none;stroke:#d9a46a;stroke-width:1.8;stroke-linecap:round;stroke-dasharray:0 1750;animation:copper-trace 15s ease-in-out infinite}
-.copper-sweep.delayed{animation-delay:-5s}
-.copper-sweep.slower{animation-delay:-10s}
-@keyframes copper-trace{0%,8%{stroke-dasharray:0 1750;stroke-dashoffset:0;opacity:0}20%{opacity:.4}45%{stroke-dasharray:360 1750;opacity:.5}70%,100%{stroke-dasharray:0 1750;stroke-dashoffset:-820;opacity:0}}
-.hero-scroll{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);z-index:3}
-.hero-scroll a{background:#102d26c9;border:1px solid #d4bb8b79;backdrop-filter:blur(7px);color:#f3f0e7;border-radius:30px;padding:10px 19px;text-decoration:none;font:10px var(--mono);letter-spacing:.12em;white-space:nowrap;transition:background .2s}
-.hero-scroll a:hover{background:#295246}
-.hero-scroll span{margin-left:10px}
-@media(max-width:700px){.approved-hero{aspect-ratio:3/2;min-height:0}.hero-scroll{bottom:8px}.hero-scroll a{padding:8px 12px;font-size:8px}}
-@media(prefers-reduced-motion:reduce){.copper-sweep{animation:none;opacity:0}.copper-illustration{animation:none;opacity:.10}}
-</style><link rel="stylesheet" href="assets/hero-interactions.css?v=1"><link rel="stylesheet" href="assets/leaf-cursor.css?v=1"></head>
-<body><a class="skip" href="#about">Skip to content</a>
+</style><link rel="preload" as="image" href="assets/hero/background.png"><style id="background-stage-css">
+/*
+ * STAGE 1 — BACKGROUND ONLY.
+ * This exact, separate background asset fills the *visible viewport*
+ * without distortion. 'cover' can crop only the outer edges at unusual
+ * aspect ratios; the mountain/forest focal area stays centered.
+ * Prior page sections are preserved in the markup and hidden temporarily.
+ */
+html {scroll-behavior:auto}
+body.stage-background-only {margin:0;overflow-x:hidden;background:#092c24}
+body.stage-background-only > header,
+body.stage-background-only main > section:not(#home),
+body.stage-background-only > footer {display:none!important}
+body.stage-background-only main {margin:0;padding:0}
+body.stage-background-only #home.background-stage {
+  display:block;
+  position:relative;
+  isolation:isolate;
+  margin:0;
+  padding:0;
+  width:100%;
+  min-width:0;
+  height:100vh;
+  height:100svh;
+  min-height:0;
+  max-height:none;
+  overflow:hidden;
+  aspect-ratio:auto;
+  border:0;
+  border-radius:0;
+  background-color:#092c24;
+  background-image:url('assets/hero/background.png');
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:cover;
+  animation:none;
+}
+body.stage-background-only #home.background-stage::before,
+body.stage-background-only #home.background-stage::after {content:none!important;display:none!important}
+@supports (height:100dvh) {
+  body.stage-background-only #home.background-stage {height:100dvh}
+}
+@media(prefers-reduced-motion:reduce) {
+  body.stage-background-only #home.background-stage {animation:none!important}
+}
+</style></head>
+<body class="stage-background-only"><a class="skip" href="#about">Skip to content</a>
 <header><div class="wrap nav"><a class="brand" href="#home">Reshma <em>“Ray”</em> Panibhate</a><button class="nav-toggle" id="menuButton" aria-expanded="false" aria-controls="navigation">Menu ☰</button><nav class="menu" id="navigation" aria-label="Main navigation"><a href="#about">About</a><a href="#work">Selected work</a><a href="#experience">Experience</a><a href="#hackathons">Hackathons</a><a href="#skills">Skills</a><a href="#contact">Contact ↗</a></nav></div></header>
 <main>
-<section class="hero approved-hero" id="home" aria-label="Interactive illustration: explore Reshma's work through the illustrated objects" data-open="false" data-active="" data-side="right">
-  <div class="art-stage">
-    <div class="art-canvas">
-    <img class="approved-art" src="assets/approved-hero.png" alt="Illustrated portfolio portrait of Reshma Panibhate on a forest-green background, with the name Reshma Panibhate, a robot dog, a camera trap, a turtle, a deer, mountains, ferns, and copper ornamentation." width="1536" height="1024" fetchpriority="high" decoding="async">
-    <img class="copper-illustration" src="assets/illustrations/copper-orbits.svg" alt="" aria-hidden="true" width="1536" height="1024">
-    <svg class="copper-glow" viewBox="0 0 1536 1024" preserveAspectRatio="none" aria-hidden="true"><path class="copper-sweep" d="M-30 15 C 180 8 90 170 0 235"/><path class="copper-sweep delayed" d="M1300 930 Q1450 765 1560 730"/><path class="copper-sweep slower" d="M-30 917 Q145 840 289 1025"/></svg>
-    <svg class="art-outlines" viewBox="0 0 1536 1024" preserveAspectRatio="none" aria-hidden="true">
-      <path class="art-outline" data-outline="robotics" d="M142 373 Q172 329 224 324 Q288 306 322 350 L330 414 L297 460 L245 457 L211 445 L173 475 L129 449 Z"/>
-      <path class="art-outline" data-outline="conservation" d="M1181 250 Q1229 205 1336 230 Q1425 234 1474 304 L1465 389 L1365 396 L1267 377 L1188 326 Z"/>
-      <path class="art-outline" data-outline="conservation" d="M1341 524 L1404 511 L1474 548 L1497 616 L1472 671 L1332 664 L1319 604 Z"/>
-      <path class="art-outline" data-outline="conservation" d="M62 695 Q94 664 154 672 L210 720 L207 829 L165 874 L67 853 L49 789 Z"/>
-      <path class="art-outline" data-outline="climate" d="M216 557 L332 445 L405 501 L456 452 L556 555 Q392 620 216 557 Z"/>
-    </svg>
-    <div class="art-hit-areas" aria-label="Explore projects by interacting with the illustrations">
-      <button type="button" class="art-hit art-hit--robot" data-explore-topic="robotics" data-side="right" aria-label="Robot dog: explore robotics and embodied AI projects" aria-controls="artProjectsPanel" aria-expanded="false"><span class="art-hit-label">ROBOTICS ↗</span></button>
-      <button type="button" class="art-hit art-hit--camera" data-explore-topic="conservation" data-side="right" aria-label="Camera trap: explore conservation AI and camera-trap research" aria-controls="artProjectsPanel" aria-expanded="false"><span class="art-hit-label">CONSERVATION ↗</span></button>
-      <button type="button" class="art-hit art-hit--turtle" data-explore-topic="conservation" data-side="left" aria-label="Turtle: explore wildlife conservation projects" aria-controls="artProjectsPanel" aria-expanded="false"><span class="art-hit-label">WILDLIFE AI ↗</span></button>
-      <button type="button" class="art-hit art-hit--deer" data-explore-topic="conservation" data-side="left" aria-label="Deer: explore native and invasive species classification" aria-controls="artProjectsPanel" aria-expanded="false"><span class="art-hit-label">WILDLIFE AI ↗</span></button>
-      <button type="button" class="art-hit art-hit--mountains" data-explore-topic="climate" data-side="right" aria-label="Mountains: explore NASA Space Apps and climate technology projects" aria-controls="artProjectsPanel" aria-expanded="false"><span class="art-hit-label">EARTH & CLIMATE ↗</span></button>
-    </div>
-    </div>
-  </div>
-  <aside id="artProjectsPanel" class="art-popover" aria-hidden="true" aria-labelledby="artPanelHeading" inert>
-    <div class="art-popover__top"><span class="art-popover__kicker" id="artPanelKicker"></span><button type="button" class="art-popover__close" id="artPanelClose" aria-label="Close project suggestions">×</button></div>
-    <h2 id="artPanelHeading"></h2>
-    <p class="art-popover__desc" id="artPanelDescription"></p>
-    <ul class="art-popover__links" id="artPanelLinks"></ul>
-    <p class="art-popover__foot" id="artPanelFootnote"></p>
-  </aside>
-  <div class="art-scene-menu" aria-label="Explore project areas"><p class="scene-instruction">HOVER THE ILLUSTRATIONS / OR CHOOSE A TRAIL</p>
-    <button type="button" data-explore-topic="robotics" data-side="right" aria-pressed="false">Robotics & embodied AI</button>
-    <button type="button" data-explore-topic="conservation" data-side="left" aria-pressed="false">Conservation & wildlife</button>
-    <button type="button" data-explore-topic="climate" data-side="right" aria-pressed="false">NASA & climate</button>
-  </div>
-</section>
+<!-- Phase 1: full-viewport BACKGROUND ONLY. Subsequent layers will be added in later commits. -->
+<section id="home" class="hero background-stage" role="img" aria-label="Forest-green editorial landscape with mountains, pine trees, a warm ivory sun, copper topographic lines, and teal organic forms."></section>
 <section class="intro" id="about"><div class="wrap intro-grid"><div><p class="eyebrow">01 / The person behind the work</p><h2 class="section-title">Curious about<br>what's <em>possible.</em></h2><p class="lead">I'm a computer vision and robotics engineer working at the intersection of perception, machine learning, and the physical world.</p><p>My favorite problems require more than a high benchmark score. I love investigating where systems fail, understanding why, and building something more reliable—especially when the work can support people, conservation, or scientific discovery.</p><p class="micro">M.S. Robotics & Autonomous Systems (AI) · Arizona State University</p></div><div><div class="intro-photo"><img src="https://raw.githubusercontent.com/ray021207/ray021207.github.io/main/assets/reshma-avatar.jpg" alt="Portrait of Reshma"></div><p class="micro">An engineer, a researcher, and a lifelong learner.</p></div></div></section>
 <section id="work"><div class="wrap"><p class="eyebrow">02 / Selected engineering projects</p><h2 class="section-title">Work that asks<br><em>better questions.</em></h2><p class="lead">A few projects that show how I think, build, test, and learn. The results matter—and so do the failures that revealed what to fix.</p><div class="project-grid">
 <article class="project" id="project-conservation"><div class="cover"><span aria-hidden="true">✦</span></div><div class="project-content"><div class="project-type">CONSERVATION AI / INDEPENDENT RESEARCH</div><h3>When Accuracy Misleads</h3><p>A 43,278-image camera-trap benchmark exposed a critical generalization failure: a model with 97.3% validation accuracy missed every invasive image on a small unseen Hawaiʻi test set.</p><div class="project-links"><a href="projects/explore.html">Explore work ↗</a></div></div></article>
@@ -98,9 +93,4 @@ header{position:relative;background:#102d26;backdrop-filter:none}
 <section class="skills" id="skills"><div class="wrap"><p class="eyebrow">05 / Tools & capabilities</p><h2 class="section-title">The tools are varied.<br><em>The curiosity isn't.</em></h2><div class="pill-list"><span class="skill">Computer Vision</span><span class="skill">PyTorch</span><span class="skill">Vision-Language Models</span><span class="skill">OpenCV</span><span class="skill">DINOv2</span><span class="skill">Semantic Mapping</span><span class="skill">ROS 2</span><span class="skill">Gazebo</span><span class="skill">Isaac Sim</span><span class="skill">SLAM / Nav2</span><span class="skill">Python</span><span class="skill">C++</span><span class="skill">CUDA / SLURM</span><span class="skill">Machine Learning Evaluation</span><span class="skill">Full-Stack Engineering</span></div></div></section>
 <section class="contact" id="contact"><div class="wrap"><p class="eyebrow" style="justify-content:center">06 / Say hello</p><h2 class="section-title">Let's build something<br>that <em>matters.</em></h2><p class="lead">I'm interested in computer vision, robotics, perception, and applied research that makes an impact in the real world.</p><div class="contact-actions"><a href="mailto:panibhatereshma@gmail.com">Email me ↗</a><a href="https://github.com/ray021207" target="_blank" rel="noopener">GitHub ↗</a><a href="https://www.linkedin.com/in/reshmapanibhate" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/ray021207/ray021207.github.io/raw/refs/heads/main/assets/Reshma_Panibhate_Resume.pdf" target="_blank" rel="noopener">Résumé ↗</a></div></div></section>
 </main><footer><div class="wrap footer-row"><span>© 2026 Reshma Panibhate. Made with curiosity.</span><a href="#home">Back to top ↑</a></div></footer>
-<script>
-const btn=document.getElementById("menuButton"), nav=document.getElementById("navigation");
-btn.addEventListener("click",()=>{const open=nav.classList.toggle("open");btn.setAttribute("aria-expanded",String(open));btn.textContent=open?"Close ×":"Menu ☰"});
-nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");btn.setAttribute("aria-expanded","false");btn.textContent="Menu ☰"}));
-if(window.matchMedia("(pointer:fine) and (prefers-reduced-motion:no-preference)").matches){const hero=document.querySelector(".hero");hero.addEventListener("pointermove",e=>{const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;hero.style.setProperty("--px",x*13+"px");hero.style.setProperty("--py",y*9+"px");hero.style.setProperty("--orbitx",x*-21+"px");hero.style.setProperty("--orbity",y*-16+"px");hero.style.setProperty("--dx",x*13+"px");hero.style.setProperty("--dy",y*10+"px")});hero.addEventListener("pointerleave",()=>{for(const key of ["--px","--py","--orbitx","--orbity","--dx","--dy"])hero.style.setProperty(key,"0px")})}
-</script><script defer src="assets/hero-interactions.js?v=1"></script></body></html>
+</body></html>
