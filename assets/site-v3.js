@@ -58,6 +58,35 @@
   filters.forEach(btn => btn.addEventListener('click', () => filterProjects(btn.dataset.filterButton)));
   if (filters.length) filterProjects('all');
 
-  // Interactive hero icons are ordinary links so mouse, keyboard and touch all navigate.
-  // We will update their exact destinations after the user provides the project mapping.
+  // Progress follows native scrolling; we never intercept wheel/touch events or alter velocity.
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let pending = false;
+    const updateReadingProgress = () => {
+      pending = false;
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const fraction = Math.max(0, Math.min(1, window.scrollY / max));
+      document.documentElement.style.setProperty('--reading-progress', String(fraction));
+    };
+    const queueProgress = () => {
+      if (pending) return;
+      pending = true;
+      window.requestAnimationFrame(updateReadingProgress);
+    };
+    window.addEventListener('scroll', queueProgress, { passive: true });
+    window.addEventListener('resize', queueProgress, { passive: true });
+    queueProgress();
+  }
+
+  // Freeze intricate decorative motion when the hero leaves the viewport.
+  // All four category links stay interactive for pointer, touch and keyboard.
+  const hero = document.querySelector('.hero-scene');
+  if (hero && 'IntersectionObserver' in window) {
+    const icons = [...hero.querySelectorAll('.hero-nav-art')];
+    const motionObserver = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        icons.forEach(icon => icon.classList.toggle('motion-paused', !entry.isIntersecting));
+      }
+    }, { threshold: 0 });
+    motionObserver.observe(hero);
+  }
 })();
