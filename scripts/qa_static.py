@@ -87,7 +87,7 @@ for required in [
     if not target.exists() or target.stat().st_size < 1000:
         ISSUES.append(f"Hero layer missing or unexpectedly small: {required}")
 
-for reference in re.findall(r"url\\(['\\\"]?([^)'\\\"]+)", CSS.read_text("utf-8")):
+for reference in re.findall(r"url\(\s*['\"]?([^)'\"]+)", CSS.read_text("utf-8")):
     if reference.startswith(("http", "data:")):
         continue
     resource = (CSS.parent / reference).resolve()
