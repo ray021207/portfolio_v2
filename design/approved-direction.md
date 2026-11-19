@@ -26,8 +26,10 @@ Do **not** replace the approved artwork wholesale. Animate **independent, lightw
 
 - Selected research: Native vs Invasive Species OOD benchmark; GraphEQA; medical imaging / Chest X-ray CAD; degradation-aware semantic mapping.
 - Other academic research: WebArena agent evaluation, fruit grading, human–AI interaction, athlete injury risk, MyCobot maze solving.
-- Experience: ASU Center for Engagement Science (Adidas eye-tracking and Mindsigns head-impact study); Monark Health full-stack engineering; Tikkun Olam Makers assistive-technology team lead.
-- Freelance and hackathon work separated accurately; honor author-provided classification of Health Tracker as freelance and NASA, Hackathon Humanity, WasteWise, Glacier, Blowpack HydroView, and Clarity as hackathons.
+- **Professional experience: three prominent project cards** — **Adidas** eye-tracking research, **Mindsigns** head-impact research, and **Freelance Work — Health Tracker**. This is a display grouping, NOT three separate employers. Adidas and Mindsigns are two projects under the **same ASU Center for Engagement Science research position**; display the actual employer prominently. The author explicitly established the spelling **Mindsigns** even though a subsequent message said “MindSense.” Avoid falsely stating that Adidas hired them directly.
+- **Other professional experience:** Monark Health — Full-Stack AI Engineer (new résumé says production launch pending BAA approval; do not claim already live). Tikkun Olam Makers — Assistive Technology Team Lead (professional leadership/experience section).
+- **Featured independent/academic research** — Native vs Invasive Species OOD benchmark, GraphEQA embodied QA, Chest X-ray CAD, Degradation-Aware Semantic Mapping, with other relevant academic research linked. Do NOT misclassify academic projects as paid work.
+- **Hackathons and builds:** NASA Hackathon, Hackathon Humanity, WasteWise, Glacious/Glacier (verify exact name), Blowpack HydroView, Clarity. Keep the author's classification as hackathons and use clear labels. Health Tracker is freelance, not a hackathon.
 - About, skills, education, publication, contact.
 
 ## Most recent résumé supplied
@@ -44,6 +46,20 @@ Notably includes a project not yet available as its own GitHub repo:
 - Award placements differ between sources for GlobeHacks; confirm before displaying a specific placement.
 - Never imply study protocols for ongoing Mindsigns research are completed research outcomes. Do not publish IRB documents or participant data.
 
+## Primary goal — recruitability
+
+**The portfolio must help the author land relevant computer vision, ML, robotics/perception and applied-research roles.** Beautiful design is a differentiator, but clarity, proof, and credibility take precedence. No portfolio can guarantee a hiring decision.
+
+Recruiter-facing requirements:
+1. Above fold, immediately surface author's name, job focus (**Computer Vision / ML / Robotics**), short value proposition, and visible **View Projects / Résumé / Contact** links; do not hide all of this behind an intro.
+2. Deliver a memorable, faithful portrait-led visual in a fast, accessible, responsive page with tasteful motion and reduced-motion support.
+3. Within one scroll, show 2–3 compelling evidence-backed project teasers. Project pages should show problem, individual contribution, pipeline, metrics, pitfalls, outcome and links. Clearly mark pilot statistics and incomplete projects.
+4. **Experience** should present Adidas, Mindsigns and freelance Health Tracker prominently, under their **accurate employment relationships**, as specified above. Do not omit Monark Health, which is listed as full-stack employment on the latest résumé.
+5. Distinguish research, professional experience and hackathons via honest labels; avoid inflating contributions, timelines, or production status.
+6. Provide a scannable skills and tools section, downloadable up-to-date résumé, and clear email/LinkedIn/GitHub links.
+7. Accessibility, Core Web Vitals, SEO, legibility, mobile behavior, keyboard interactions and graceful fallbacks matter as much as visual effects.
+8. Use the current résumé carefully: GraphEQA bullets appear duplicated from chest X-ray and need correction using the dedicated report.
+
 ## Build priority
 
-First: implement a faithful and responsive landing-page prototype using the approved artwork as reference, working accessible navigation, and understated movement. Next: expand into truthful, evidence-rich project case studies and experience sections.
+First: implement a faithful and responsive landing-page prototype using the approved artwork as reference, working navigation, strong recruiter-facing headline/CTA and understated movement. Next: build strong evidence-based technical case studies and professional experience sections, then evaluate performance, mobile UX and accessibility.
