@@ -251,3 +251,23 @@
   .reveal,.reveal.reveal-from-left,.reveal.reveal-from-right {opacity:1!important;transform:none!important}
   .hero-portrait {will-change:auto}
 }
+
+/* The Journey's copper thread follows the actual reading position.
+   Scroll-linked when supported; otherwise the original static line remains. */
+@keyframes journey-thread-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@media(prefers-reduced-motion:no-preference){
+  @supports(animation-timeline:view()){
+    .journey-track::after{
+      content:"";position:absolute;z-index:2;top:0;bottom:0;left:calc(50% - 1.5px);
+      width:3px;border-radius:10px;
+      background:linear-gradient(180deg,#e0b77a,#f1d19a 44%,#87af98 100%);
+      transform:scaleY(0);transform-origin:top;
+      animation:journey-thread-draw linear both;
+      animation-timeline:view(block);
+      animation-range:entry 0% exit 15%;
+      pointer-events:none;
+    }
+    @media(max-width:760px){.journey-track::after{left:23.5px}}
+  }
+}
+@media(prefers-reduced-motion:reduce){.journey-track::after{display:none!important}}
