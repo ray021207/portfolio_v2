@@ -7,8 +7,16 @@
   isolation:isolate;
 }
 .hero-scene::before {
-  -webkit-mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,transparent 0%,transparent 48%,#000 89%);
-  mask-image:radial-gradient(ellipse 60% 70% at 50% 50%,transparent 0%,transparent 48%,#000 89%);
+  /* The original full background already contains a mountain medallion.
+     Using it here would duplicate that object behind the separate layer.
+     Keep the copper contour ornament as a clean independent backdrop instead. */
+  background-image:url('./illustrations/copper-orbits.svg');
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  opacity:.46;
+  -webkit-mask-image:none;
+  mask-image:none;
 }
 .hero-first {
   width:min(49vw,58vh,690px);
