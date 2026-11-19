@@ -1,0 +1,133 @@
+/* Independent, calm motion for the four illustrated project portals.
+   Keep the artwork in its original positions and preserve click targets.
+   Each illustration moves on its own timeline; the links themselves stay fixed. */
+.hero-scene .hero-nav-art {
+  position:absolute;
+  isolation:isolate;
+  cursor:pointer;
+  touch-action:manipulation;
+  transition:transform .35s cubic-bezier(.21,.72,.28,1),filter .35s ease;
+}
+.hero-scene .hero-nav-art::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:78%;
+  height:78%;
+  left:11%;
+  top:13%;
+  border-radius:50%;
+  background:radial-gradient(ellipse,#d8b8782c,transparent 70%);
+  opacity:0;
+  transform:scale(.8);
+  transition:opacity .35s,transform .35s;
+  pointer-events:none;
+}
+.hero-scene .hero-nav-art img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  transform-origin:50% 62%;
+  will-change:transform;
+  animation-duration:var(--art-period,8s);
+  animation-timing-function:ease-in-out;
+  animation-iteration-count:infinite;
+  animation-direction:alternate;
+}
+.hero-scene .art-dog img{
+  --art-period:6.6s;
+  animation-name:dog-step;
+  transform-origin:47% 76%;
+}
+.hero-scene .art-turtle.art-health img{
+  --art-period:8.4s;
+  animation-name:monitor-sway;
+  transform-origin:51% 54%;
+}
+.hero-scene .art-camera img{
+  --art-period:9.2s;
+  animation-name:camera-search;
+  transform-origin:48% 60%;
+}
+.hero-scene .art-deer img{
+  --art-period:7.7s;
+  animation-name:deer-look;
+  transform-origin:52% 78%;
+}
+@keyframes dog-step{
+  0%,15%{transform:translate3d(-3px,2px,0) rotate(-2deg)}
+  45%{transform:translate3d(3px,-5px,0) rotate(.8deg)}
+  70%{transform:translate3d(0,0,0) rotate(1.8deg)}
+  100%{transform:translate3d(5px,-3px,0) rotate(-1deg)}
+}
+@keyframes monitor-sway{
+  0%,16%{transform:translate3d(0,2px,0) rotate(-2deg) scale(.99)}
+  55%{transform:translate3d(0,-5px,0) rotate(.7deg) scale(1.018)}
+  100%{transform:translate3d(1px,0,0) rotate(2deg) scale(1)}
+}
+@keyframes camera-search{
+  0%,20%{transform:translate3d(0,2px,0) rotate(-1.7deg)}
+  55%{transform:translate3d(2px,-4px,0) rotate(.8deg)}
+  100%{transform:translate3d(-2px,1px,0) rotate(1.7deg)}
+}
+@keyframes deer-look{
+  0%,15%{transform:translate3d(-2px,1px,0) rotate(-1.2deg)}
+  60%{transform:translate3d(2px,-4px,0) rotate(1deg)}
+  100%{transform:translate3d(0,-1px,0) rotate(-.4deg)}
+}
+.hero-scene .hero-nav-art:is(:hover,:focus-visible){
+  z-index:16;
+  transform:translate(-50%,-50%) scale(1.08);
+}
+.hero-scene .hero-nav-art:is(:hover,:focus-visible)::before{
+  opacity:1;
+  transform:scale(1.22);
+}
+.hero-scene .hero-nav-art:is(:hover,:focus-visible) img{
+  animation-play-state:paused;
+  filter:drop-shadow(0 2px 16px #e8bf8a8e);
+}
+.hero-scene .hero-nav-art .art-tip{
+  max-width:min(260px,75vw);
+  white-space:normal;
+  text-wrap:balance;
+  text-align:center;
+  line-height:1.5;
+  width:max-content;
+  pointer-events:none;
+  z-index:17;
+  font-size:10px;
+  letter-spacing:.045em;
+  padding:9px 13px;
+  border-radius:12px;
+  box-shadow:0 9px 21px #061e1791;
+}
+/* Keep the medical-monitor illustration at exactly the turtle's prior coordinates. */
+.hero-scene .art-health{ /* art-turtle supplies all desktop/mobile placement rules */ }
+@media(max-width:800px){
+  .hero-scene .hero-nav-art .art-tip{font-size:9px;max-width:160px}
+  .hero-scene .art-turtle .art-tip,.hero-scene .art-deer .art-tip{
+    left:auto;right:0;transform:translate(0,6px);
+  }
+  .hero-scene .art-turtle:hover .art-tip,.hero-scene .art-turtle:focus-visible .art-tip,
+  .hero-scene .art-deer:hover .art-tip,.hero-scene .art-deer:focus-visible .art-tip{
+    transform:translate(0,0);
+  }
+  .hero-scene .art-dog .art-tip,.hero-scene .art-camera .art-tip{
+    left:0;transform:translate(0,6px);
+  }
+  .hero-scene .art-dog:hover .art-tip,.hero-scene .art-dog:focus-visible .art-tip,
+  .hero-scene .art-camera:hover .art-tip,.hero-scene .art-camera:focus-visible .art-tip{
+    transform:translate(0,0);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-scene .hero-nav-art img{
+    animation:none!important;
+    transform:none!important;
+    will-change:auto;
+  }
+  .hero-scene .hero-nav-art,
+  .hero-scene .hero-nav-art::before,
+  .hero-scene .hero-nav-art .art-tip{transition:none!important}
+}
