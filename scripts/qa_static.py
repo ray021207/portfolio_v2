@@ -16,7 +16,7 @@ PAGES = [
     ROOT / "projects/grapheqa.html",
     ROOT / "projects/sinkronized.html",
 ]
-CSS = ROOT / "assets/site-v3.css"
+CSS_FILES = [ROOT / "assets/site-v3.css", ROOT / "assets/site-refinement.css"]
 JS = ROOT / "assets/site-v3.js"
 ISSUES = []
 
@@ -87,12 +87,16 @@ for required in [
     if not target.exists() or target.stat().st_size < 1000:
         ISSUES.append(f"Hero layer missing or unexpectedly small: {required}")
 
-for reference in re.findall(r"url\(\s*['\"]?([^)'\"]+)", CSS.read_text("utf-8")):
-    if reference.startswith(("http", "data:")):
+for css in CSS_FILES:
+    if not css.exists():
+        ISSUES.append(f"Missing CSS: {css.relative_to(ROOT)}")
         continue
-    resource = (CSS.parent / reference).resolve()
-    if not resource.exists():
-        ISSUES.append(f"Broken CSS asset URL: {reference}")
+    for reference in re.findall(r"url\\(\\s*['\\\"]?([^)'\\\"]+)", css.read_text("utf-8")):
+        if reference.startswith(("http", "data:")):
+            continue
+        resource = (css.parent / reference).resolve()
+        if not resource.exists():
+            ISSUES.append(f"Broken CSS asset URL in {css.name}: {reference}")
 
 if JS.exists():
     proc = subprocess.run(["node", "--check", str(JS)], capture_output=True, text=True)
@@ -100,6 +104,17 @@ if JS.exists():
         ISSUES.append("JavaScript syntax failed: " + proc.stderr.strip())
 else:
     ISSUES.append("Missing JavaScript")
+
+# Role identity: Health Tracker is the Monark Health freelance project,
+# not a second job, and TOM remains a community milestone.
+if home.count("<h3>Monark Health</h3>") != 1:
+    ISSUES.append("Expected exactly one Monark Health professional timeline entry")
+if "<h3>Health Tracker</h3>" in home:
+    ISSUES.append("Health Tracker incorrectly duplicated as its own role")
+if "<h3>Arizona State University</h3>" not in home:
+    ISSUES.append("Missing unified ASU research role")
+if "journey-milestone--left" not in home:
+    ISSUES.append("Missing professional journey timeline")
 
 if ISSUES:
     print("FAILED:")
