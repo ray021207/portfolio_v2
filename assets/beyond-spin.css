@@ -1,0 +1,260 @@
+/* BEYOND THE LAB / Six authentic photographs in a 3D orbit.
+   Original implementation inspired by a spinning gallery reference.
+   No image replacement, external JS library, or intercepted page scrolling. */
+
+.beyond-page { overflow: hidden; padding: clamp(20px,3vh,32px) 0 clamp(22px,3vh,32px); }
+.beyond-page .beyond-heading { margin-bottom: 4px; }
+.beyond-page .beyond-heading h2 { font-size: clamp(35px,3.55vw,51px); line-height: 1.03; }
+.beyond-page .beyond-heading .section-label { margin-bottom: 8px; }
+.beyond-page .beyond-heading > p:last-child { max-width: 460px; font-size: 12px; line-height: 1.6; }
+.beyond-page .beyond-stories { display:block; }
+.spin-orbit { position:relative; min-width:0; isolation:isolate; }
+.spin-orbit-stage {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px;
+  align-items:stretch;
+  position:relative;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  padding:14px 0 10px;
+}
+/* Without JS, or for reduced motion, six equal cards remain a readable 3×2 grid. */
+.spin-photo-card {
+  --spin-photo-width:100%;
+  --spin-photo-height:clamp(135px,19svh,185px);
+  position:relative;
+  margin:0;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  background:#f5f1e7;
+  border:1px solid #b3c5b3;
+  border-radius:12px;
+  color:#284838;
+  box-shadow:0 6px 19px #1a392b0e;
+  transform-style:preserve-3d;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+}
+.spin-photo-frame {
+  position:relative;
+  display:block;
+  width:100%;
+  height:var(--spin-photo-height);
+  flex:0 0 var(--spin-photo-height);
+  min-height:0;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  border:0;
+  background:#d3c6af;
+  cursor:pointer;
+  appearance:none;
+  perspective:900px;
+}
+.spin-photo-frame img {
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+  max-height:none;
+  object-fit:cover;
+  object-position:center;
+  aspect-ratio:auto;
+  transform:scale(1.01);
+  filter:saturate(.96) contrast(1.025);
+  transition:transform 600ms cubic-bezier(.23,.7,.18,1),filter .4s ease;
+}
+.spin-photo-card[data-spin-index="0"] img { object-position:center 52%; }
+.spin-photo-card[data-spin-index="1"] img { object-position:center 48%; }
+.spin-photo-card[data-spin-index="2"] img { object-position:center 58%; }
+.spin-photo-card[data-spin-index="3"] img { object-position:center; }
+.spin-photo-card[data-spin-index="4"] img { object-position:center; }
+.spin-photo-card[data-spin-index="5"] img { object-position:center; }
+.spin-photo-frame::after {
+  content:""; pointer-events:none; position:absolute; z-index:1; inset:0;
+  background:linear-gradient(110deg,transparent 26%,#fff9e222 47%,transparent 65%);
+  opacity:0; transition:opacity .45s;
+}
+.spin-photo-corner {
+  position:absolute; top:9px; right:9px; z-index:2;
+  display:grid;place-items:center;
+  width:28px;height:28px;border-radius:50%;
+  border:1px solid #f1dfb6a6;
+  color:#fff0cf;background:#14382d7a;
+  font:15px var(--font-serif);opacity:0;
+  transform:translateY(5px);transition:transform .3s,opacity .3s;
+}
+.spin-photo-frame:hover img,.spin-photo-frame:focus-visible img{
+  transform:scale(1.06);
+  filter:saturate(1.045) contrast(1.035);
+}
+.spin-photo-frame:hover::after,.spin-photo-frame:focus-visible::after{opacity:1;}
+.spin-photo-frame:hover .spin-photo-corner,.spin-photo-frame:focus-visible .spin-photo-corner{
+  opacity:1;transform:none;
+}
+.spin-photo-frame:focus-visible { outline:3px solid #c59459;outline-offset:-4px; }
+.spin-photo-card figcaption {
+  display:flex;flex-direction:column;justify-content:center;
+  flex:1;gap:4px;
+  min-height:66px;
+  padding:10px 13px 11px;
+  background:#f5f1e7;
+  text-align:left;
+}
+.spin-photo-kicker {
+  font:9px/1.25 var(--font-mono);
+  letter-spacing:.09em;
+  color:#9a7755;
+}
+.spin-photo-card figcaption strong {
+  font:400 clamp(17px,1.8vw,23px)/1.14 var(--font-serif);
+  letter-spacing:-.028em;color:#244635;
+}
+.spin-photo-detail { font:10px/1.35 var(--font-sans);color:#627365; }
+
+/* Enhanced desktop: same-sized cards orbit on an elliptical 3D track. */
+.spin-orbit-stage.is-orbiting{
+  display:block;
+  padding:0;
+  height:clamp(410px,61svh,550px);
+  perspective:1450px;
+  perspective-origin:50% 50%;
+  transform-style:preserve-3d;
+}
+.spin-orbit-stage.is-orbiting .spin-photo-card{
+  position:absolute;
+  left:50%;top:50%;
+  width:var(--orbit-card-width,210px);
+  height:var(--orbit-card-height,210px);
+  min-height:0;
+  max-height:none;
+  transform:translate(-50%,-50%) translate3d(var(--orbit-x,0px),var(--orbit-y,0px),var(--orbit-z,0px)) rotateY(var(--orbit-ry,0deg));
+  opacity:1;
+  z-index:var(--orbit-layer,1);
+  will-change:transform;
+  transition:box-shadow .28s,border-color .28s;
+}
+.spin-orbit-stage.is-orbiting .spin-photo-frame{
+  --spin-photo-height:var(--orbit-image-height,146px);
+  flex:0 0 var(--orbit-image-height,146px);
+  height:var(--orbit-image-height,146px);
+}
+.spin-orbit-stage.is-orbiting .spin-photo-card figcaption{
+  min-height:0;
+  padding:9px 12px 11px;
+  gap:3px;
+}
+.spin-orbit-stage.is-orbiting .spin-photo-card figcaption strong { font-size:18px; }
+.spin-orbit-stage.is-orbiting .spin-photo-detail { font-size:9px;line-height:1.28; }
+.spin-orbit-stage.is-orbiting .spin-photo-kicker { font-size:8px; }
+.spin-orbit-stage.is-orbiting .spin-photo-card:hover,
+.spin-orbit-stage.is-orbiting .spin-photo-card:focus-within{
+  border-color:#c79b64;
+  box-shadow:0 19px 34px #1e483447,0 0 0 2px #d1ad7944;
+}
+.spin-orbit-controls{
+  display:flex;align-items:center;justify-content:center;
+  gap:9px;margin:0;min-height:43px;
+}
+.spin-orbit-step,.spin-orbit-toggle{
+  appearance:none;cursor:pointer;
+  border:1px solid #a7bea7;
+  background:#f4f0e7;
+  color:#294c3a;
+  height:34px;min-width:38px;
+  display:grid;place-items:center;
+  padding:0 12px;border-radius:25px;
+  font:12px/1 var(--font-mono);
+  transition:background .2s,color .2s,border-color .2s;
+}
+.spin-orbit-step{font-size:21px;}
+.spin-orbit-toggle{min-width:132px;}
+.spin-orbit-step:hover,.spin-orbit-step:focus-visible,
+.spin-orbit-toggle:hover,.spin-orbit-toggle:focus-visible{
+  background:#285240;color:#f2e7ca;border-color:#285240;
+}
+.spin-orbit-tip{
+  padding-left:10px;
+  font:9px/1.4 var(--font-mono);
+  color:#78917b;letter-spacing:.07em;
+}
+.spin-orbit:not(.is-enhanced) .spin-orbit-controls { display:none; }
+/* Accessible original-photo lightbox; no generated artwork. */
+.spin-photo-dialog{
+  width:min(94vw,920px);
+  max-width:94vw;
+  max-height:92dvh;
+  overflow:auto;
+  margin:auto;
+  padding:18px;
+  border:1px solid #c8af86;
+  border-radius:14px;
+  color:#f2e9d3;
+  background:#122f26;
+  box-shadow:0 27px 90px #08191396;
+}
+.spin-photo-dialog::backdrop{background:#09150edb;backdrop-filter:blur(6px);}
+.spin-photo-dialog img{
+  display:block;width:100%;height:auto;max-height:75dvh;
+  object-fit:contain;margin:auto;
+}
+.spin-photo-dialog p{
+  font:400 clamp(19px,2.5vw,28px)/1.35 var(--font-serif);
+  color:#f0dfbf;text-align:center;padding:12px 25px 0;margin:0;
+}
+.spin-dialog-close{
+  display:grid;place-items:center;
+  position:sticky;top:0;float:right;
+  z-index:3;width:35px;height:35px;
+  border-radius:50%;border:1px solid #dcc59b;
+  background:#173c2d;color:#fff2d7;font:25px var(--font-serif);
+  cursor:pointer;margin:0 0 5px 10px;
+}
+@media(max-width:1080px){.spin-orbit-tip{display:none;}}
+@media(max-width:919px){
+  .spin-orbit-stage{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .spin-photo-frame{--spin-photo-height:clamp(140px,19vw,185px);}
+  .spin-orbit-stage.is-orbiting{display:grid;height:auto;perspective:none;}
+  .spin-orbit-stage.is-orbiting .spin-photo-card{
+    position:relative;left:auto;top:auto;width:100%;height:auto;transform:none!important;
+  }
+  .spin-orbit-controls{display:none!important;}
+}
+@media(max-width:660px){
+  .beyond-page{overflow:visible;}
+  .spin-orbit-stage,.spin-orbit-stage.is-orbiting{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px 0;
+  }
+  .spin-photo-frame{--spin-photo-height:clamp(145px,28vw,220px);}
+  .spin-photo-card figcaption{min-height:84px;}
+  .spin-photo-card figcaption strong{font-size:18px;}
+  .spin-photo-detail{font-size:10px;}
+}
+@media(max-width:440px){
+  .spin-orbit-stage,.spin-orbit-stage.is-orbiting{grid-template-columns:1fr;}
+  .spin-photo-frame{--spin-photo-height:clamp(178px,48vw,230px);}
+  .spin-photo-card figcaption{min-height:73px;}
+  .spin-photo-card figcaption strong{font-size:21px;}
+}
+@media(max-height:710px) and (min-width:920px){
+  .beyond-page{padding-top:17px;padding-bottom:16px;}
+  .beyond-page .beyond-heading h2{font-size:clamp(32px,3.1vw,45px);}
+  .spin-orbit-stage.is-orbiting{height:clamp(360px,59svh,460px);}
+}
+@media(prefers-reduced-motion:reduce){
+  .spin-photo-frame img,.spin-photo-frame::after,.spin-photo-corner,
+  .spin-photo-card,.spin-orbit-step,.spin-orbit-toggle{
+    transition:none!important;animation:none!important;
+  }
+  .spin-photo-frame:hover img,.spin-photo-frame:focus-visible img{transform:none;}
+  .spin-orbit-stage.is-orbiting{display:grid;height:auto;perspective:none;}
+  .spin-orbit-stage.is-orbiting .spin-photo-card{
+    position:relative;top:auto;left:auto;transform:none!important;width:100%;height:auto;
+  }
+  .spin-orbit-controls{display:none!important;}
+}
