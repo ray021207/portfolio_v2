@@ -17,26 +17,9 @@
 .skills-letterforms { fill: var(--cream); }
 .skills-path-labels {
   fill: var(--forest);
-  font: 750 13px "DM Sans", sans-serif;
+  font: 650 10.5px system-ui, sans-serif;
   text-anchor: middle;
   dominant-baseline: central;
-}
-.skills-path-labels[data-art="soft"],
-.skills-art[data-active="soft"] .skills-path-labels[data-art="technical"] { display: none; }
-.skills-art[data-active="soft"] .skills-path-labels[data-art="soft"] { display: inline; }
-@media (prefers-reduced-motion: no-preference) {
-  .skills-art-entered .skills-path-labels text {
-    animation: skills-label-float 3.8s ease-in-out both;
-  }
-  .skills-art-entered .skills-path-labels text:nth-child(3n + 2) { animation-delay: .12s; }
-  .skills-art-entered .skills-path-labels text:nth-child(3n) { animation-delay: .24s; }
-}
-@keyframes skills-label-float {
-  0% { opacity: 0; transform: translate(0, 4px); }
-  20% { opacity: 1; transform: translate(0, 0); }
-  45% { transform: translate(1px, -2px); }
-  75% { transform: translate(-1px, 1px); }
-  100% { transform: translate(0, 0); }
 }
 .skills-reader {
   padding: 1rem;
