@@ -33,7 +33,7 @@ In the healthcare page, **professional experience is shown first**: Adidas and M
 
 Case studies contain original project figures and measured data, including the camera-trap location-shift plots, the CheXpert evaluation chart, GraphEQA ROS2 screenshot, and four-step robotic-arm maze images.
 
-**Beyond the Lab** now features three **original owner-uploaded photographs**: foster puppies, an octopus wildlife-journal spread, and the author's paintings. A compact strip underneath reuses genuine shelter, community-farm, and fire-safety photographs from the previous portfolio. **No AI-generated hobby or evidence imagery is used**; photos receive only CSS color balancing and responsive crops.
+**Beyond the Lab** features **six equal-sized original photo cards** in an interactive, slowly rotating 3D gallery: foster puppies, an octopus wildlife-journal spread, the author's paintings, animal-shelter volunteering, community farming, and neighborhood fire-safety outreach. The orbit pauses when hovered or keyboard-focused; visitors can drag, use arrow controls, pause/resume, or enlarge the original photos in an accessible dialog. On smaller screens or with reduced-motion settings, a consistent two-column/one-column grid replaces the orbit. **No AI-generated hobby or evidence imagery is used**; CSS applies only light color correction and cropping.
 
 Asset provenance and licensing considerations are documented at `assets/evidence/README.md`. Publicly visible GitHub files are **not** automatically public domain; preserve original credits, source licenses, and privacy.
 
