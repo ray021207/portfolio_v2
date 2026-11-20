@@ -1,0 +1,34 @@
+.case-interactive {
+  margin-block: 2rem 3rem;
+  padding: clamp(1rem, 4vw, 2rem);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--copper);
+  background: var(--paper);
+  color: var(--forest);
+}
+.case-interactive h2 { margin-top: 0; }
+.case-interactive details {
+  border-top: 1px solid var(--line);
+  padding: .85rem 0;
+}
+.case-interactive details:last-child { border-bottom: 1px solid var(--line); }
+.case-interactive summary {
+  cursor: pointer;
+  min-height: 2rem;
+  font-weight: 650;
+}
+.case-interactive summary:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: .25rem;
+}
+.case-interactive details p { margin-block: .5rem .75rem; }
+.case-interactive figure { margin: .75rem 0; }
+.case-interactive figure img { width: 100%; height: auto; }
+.case-interactive meter {
+  display: block;
+  width: 100%;
+  height: 1.25rem;
+  accent-color: var(--forest);
+}
+.case-interactive meter::-webkit-meter-optimum-value { background: var(--forest); }
+.case-interactive meter::-moz-meter-bar { background: var(--forest); }

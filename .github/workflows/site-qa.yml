@@ -17,6 +17,7 @@ on:
       - 'assets/coverflow-work.js'
       - 'assets/portfolio-polish.css'
       - 'assets/evidence-pages.css'
+      - 'assets/case-interactive.css'
       - 'assets/hero/**'
       - 'scripts/qa_static.py'
       - '.github/workflows/site-qa.yml'
@@ -36,6 +37,7 @@ on:
       - 'assets/coverflow-work.js'
       - 'assets/portfolio-polish.css'
       - 'assets/evidence-pages.css'
+      - 'assets/case-interactive.css'
       - 'assets/hero/**'
       - 'scripts/qa_static.py'
 permissions:
