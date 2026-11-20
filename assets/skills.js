@@ -80,13 +80,21 @@
       return;
     }
     labels.removeAttribute('clip-path');
-    const animations = [...labels.children].map((label, index) =>
-      label.animate([
-        { opacity: 0, transform: `translate(180px, ${(index % 9 - 4) * 14}px)` },
-        { opacity: 1, offset: .42 },
+    const animations = [...labels.children].map((label, index) => {
+      const direction = index % 12 * Math.PI / 6;
+      const x = Math.cos(direction) * 135;
+      const y = Math.sin(direction) * 75;
+      return label.animate([
+        { opacity: 0, transform: `translate(${x}px, ${y}px)` },
+        { opacity: 1, transform: `translate(${x * .4 - y * .25}px, ${y * .4 + x * .15}px)`, offset: .52 },
         { opacity: 1, transform: 'translate(0, 0)' },
-      ], { duration: 950, delay: index % 18 * 32, fill: 'backwards', easing: 'cubic-bezier(.22,.75,.3,1)' })
-    );
+      ], {
+        duration: 3300,
+        delay: index % 18 * 58,
+        fill: 'backwards',
+        easing: 'cubic-bezier(.28,.36,.34,1)',
+      });
+    });
     Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
       if (sequence === generation) labels.setAttribute('clip-path', 'url(#ray-letter-boundaries)');
     });
