@@ -13,7 +13,7 @@
   const prevButton = gallery.querySelector('[data-spin-prev]');
   const nextButton = gallery.querySelector('[data-spin-next]');
   const toggleButton = gallery.querySelector('[data-spin-toggle]');
-  const motion = window.matchMedia('(min-width: 920px) and (prefers-reduced-motion: no-preference)');
+  const motion = window.matchMedia('(min-width: 1060px) and (prefers-reduced-motion: no-preference)');
   if (cards.length !== 6 || !stage) return;
 
   let phase = 0;
@@ -66,7 +66,7 @@
   function measure() {
     const width = stage.clientWidth || window.innerWidth;
     const height = stage.clientHeight || 480;
-    const cardWidth = Math.min(232, Math.max(178, width * .19));
+    const cardWidth = Math.min(215, Math.max(178, width * .18));
     const cardHeight = Math.min(230, Math.max(184, height * .435));
     const imageHeight = cardHeight * .67;
     geometry = {
@@ -74,7 +74,7 @@
       height: cardHeight,
       imageHeight,
       radiusX: Math.max(90, width / 2 - cardWidth / 2 - 20),
-      radiusY: Math.max(75, (height - cardHeight) / 2 - 17)
+      radiusY: Math.max(75, (height - cardHeight) / 2 - 7)
     };
     stage.style.setProperty('--orbit-card-width', cardWidth.toFixed(1) + 'px');
     stage.style.setProperty('--orbit-card-height', cardHeight.toFixed(1) + 'px');
