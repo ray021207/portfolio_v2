@@ -336,3 +336,27 @@
   .beyond-personal-gallery figure,
   .beyond-personal-gallery img { transition: none !important; transform: none !important; }
 }
+
+/* At intermediate phone/tablet widths the portrait-oriented source photographs
+   previously stretched according to intrinsic image height. Set one measured
+   viewport for every photo, independent of source dimensions and caption text. */
+@media (min-width: 411px) and (max-width: 700px) {
+  .beyond-personal-gallery figure {
+    height: 190px;
+    min-height: 190px;
+  }
+  .beyond-personal-gallery img {
+    flex: 0 0 42%;
+    width: 42%;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: auto;
+    align-self: auto;
+    object-fit: cover;
+  }
+  .beyond-personal-gallery figcaption { min-height: 0; }
+}
+@media (max-width: 410px) {
+  .beyond-personal-gallery figcaption { min-height: 132px; }
+}
