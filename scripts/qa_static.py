@@ -185,9 +185,9 @@ for source in six_sources:
         ISSUES.append(f"Original photo missing or not displayed: {source}")
 if home.count('data-spin-card data-spin-index=') != 6:
     ISSUES.append("Beyond the Lab must show six uniform photo cards")
-if 'href="assets/beyond-spin.css?v=1"' not in home:
+if 'href="assets/beyond-spin.css?v=2"' not in home:
     ISSUES.append("Beyond the Lab rotating gallery stylesheet is missing")
-if 'src="assets/beyond-spin.js?v=1"' not in home:
+if 'src="assets/beyond-spin.js?v=2"' not in home:
     ISSUES.append("Beyond the Lab interaction script is missing")
 if 'data-spin-dialog' not in home or 'data-spin-toggle' not in home:
     ISSUES.append("Beyond the Lab photo viewer or motion controls missing")
