@@ -119,6 +119,7 @@
 
 /* Enhanced desktop: same-sized cards orbit on an elliptical 3D track. */
 .spin-orbit-stage.is-orbiting{
+  touch-action:pan-y;
   display:block;
   padding:0;
   height:clamp(410px,61svh,550px);
@@ -216,7 +217,7 @@
   cursor:pointer;margin:0 0 5px 10px;
 }
 @media(max-width:1080px){.spin-orbit-tip{display:none;}}
-@media(max-width:919px){
+@media(max-width:1059px){
   .spin-orbit-stage{grid-template-columns:repeat(3,minmax(0,1fr));}
   .spin-photo-frame{--spin-photo-height:clamp(140px,19vw,185px);}
   .spin-orbit-stage.is-orbiting{display:grid;height:auto;perspective:none;}
@@ -241,7 +242,7 @@
   .spin-photo-card figcaption{min-height:73px;}
   .spin-photo-card figcaption strong{font-size:21px;}
 }
-@media(max-height:710px) and (min-width:920px){
+@media(max-height:710px) and (min-width:1060px){
   .beyond-page{padding-top:17px;padding-bottom:16px;}
   .beyond-page .beyond-heading h2{font-size:clamp(32px,3.1vw,45px);}
   .spin-orbit-stage.is-orbiting{height:clamp(360px,59svh,460px);}
