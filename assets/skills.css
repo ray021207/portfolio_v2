@@ -21,6 +21,8 @@
   text-anchor: middle;
   dominant-baseline: central;
 }
+.skills-label-olive { fill: #365c40; }
+.skills-label-rust { fill: #784d30; }
 .skills-reader {
   padding: 1rem;
   border: 1px solid #c18b5780;
