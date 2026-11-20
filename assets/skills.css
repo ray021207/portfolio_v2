@@ -50,3 +50,17 @@
   .skills-art { min-height: clamp(12rem, 52vw, 24rem); }
   .skills-scroll { max-height: 17rem; }
 }
+
+.skill-inventory li {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+.skill-inventory li::before {
+  content: '•';
+  color: var(--copper);
+  margin-inline-end: .35em;
+}
+
+@media (forced-colors: active) {
+  .skill-inventory li { border-color: CanvasText; }
+}

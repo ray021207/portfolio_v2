@@ -43,9 +43,10 @@
     const left = (width - 476 * scale) / 2;
     const top = (height - 246 * scale) / 2;
     const inventory = inventories.find(item => item.dataset.skills === active);
-    context.font = '700 12px "DM Sans", sans-serif';
+    const codeFont = '"DM Mono", ui-monospace, monospace';
+    context.font = `700 12px ${codeFont}`;
     const labels = [...inventory.querySelectorAll('li')].map(item => {
-      const word = item.textContent.trim();
+      const word = `• ${item.textContent.trim()}`;
       return { word, span: context.measureText(word).width + 4 };
     });
     if (!labels.length) return;
@@ -80,7 +81,7 @@
       });
     });
     art.querySelector('.skills-fallback').hidden = true;
-    context.font = `700 ${12 * scale}px "DM Sans", sans-serif`;
+    context.font = `700 ${12 * scale}px ${codeFont}`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
 
@@ -90,7 +91,10 @@
       const eased = 1 - (1 - progress) ** 3;
       context.clearRect(0, 0, width, height);
       particles.forEach(({ word, x, y, angle, maxWidth, fromX, fromY }, index) => {
-        context.fillStyle = index % 4 === 0 ? '#e5b383' : '#ffeac6';
+        const copper = index % 4 === 0;
+        context.fillStyle = copper ? '#ffd19e' : '#fff4d9';
+        context.shadowColor = copper ? '#e5a45b88' : '#ffeac655';
+        context.shadowBlur = progress === 1 ? 3 * scale * ratio : 0;
         context.save();
         context.translate(fromX + (x - fromX) * eased, fromY + (y - fromY) * eased);
         context.rotate(angle * eased);
