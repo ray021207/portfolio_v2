@@ -4,8 +4,6 @@
 
   const canvas = section.querySelector('canvas');
   const context = canvas.getContext('2d');
-  const mask = document.createElement('canvas');
-  const stencil = mask.getContext('2d', { willReadFrequently: true });
   const art = section.querySelector('.skills-art');
   const controls = section.querySelector('.skills-controls');
   const buttons = [...controls.querySelectorAll('button')];
@@ -16,7 +14,7 @@
   let frame = 0;
 
   function draw(animate = false) {
-    if (!context || !stencil) return;
+    if (!context) return;
     cancelAnimationFrame(frame);
     const { clientWidth: width, clientHeight: height } = art;
     if (!width || !height) return;
@@ -25,58 +23,79 @@
     canvas.height = height * ratio;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    mask.width = width;
-    mask.height = height;
-    const typeface = '"Fraunces", Georgia, serif';
-    stencil.font = `600 100px ${typeface}`;
-    const measure = stencil.measureText('RAY');
-    const fontSize = Math.min(
-      width * 90 / measure.width,
-      height * 76 / ((measure.actualBoundingBoxAscent || 72) + measure.actualBoundingBoxDescent)
-    );
-    stencil.font = `600 ${fontSize}px ${typeface}`;
-    const bounds = stencil.measureText('RAY');
-    stencil.textAlign = 'center';
-    stencil.fillText('RAY', width / 2, (height + bounds.actualBoundingBoxAscent - bounds.actualBoundingBoxDescent) / 2);
-    const pixels = stencil.getImageData(0, 0, width, height).data;
-    const words = [...inventories.find(item => item.dataset.skills === active).querySelectorAll('li')].map(item => item.textContent);
-    const size = Math.max(5, Math.min(10, width / 82));
-    context.font = `600 ${size}px "DM Sans", sans-serif`;
-    context.textBaseline = 'middle';
-    const particles = [];
-    const inside = (x, y) => pixels[(Math.floor(y) * width + Math.floor(x)) * 4 + 3] > 180;
+    // Parallel rows of words trace the strokes of R, A and Y.
+    const strokes = [
+      [26, 29, 26, 215], [40, 39, 113, 39], [128, 38, 128, 118],
+      [40, 117, 113, 117], [67, 132, 144, 215],
+      [177, 215, 235, 33], [235, 33, 293, 215], [204, 150, 266, 150],
+      [320, 32, 386, 126], [452, 32, 386, 126], [386, 137, 386, 215],
+    ];
+    const rows = strokes.flatMap(([x, y, endX, endY]) => {
+      const angle = Math.atan2(endY - y, endX - x);
+      const length = Math.hypot(endX - x, endY - y);
+      return [-6, 6].map(offset => ({
+        x: x - Math.sin(angle) * offset,
+        y: y + Math.cos(angle) * offset,
+        angle, length, labels: [], used: 0,
+      }));
+    });
+    const scale = Math.min(width / 476, height / 246);
+    const left = (width - 476 * scale) / 2;
+    const top = (height - 246 * scale) / 2;
+    const inventory = inventories.find(item => item.dataset.skills === active);
+    context.font = '700 12px "DM Sans", sans-serif';
+    const labels = [...inventory.querySelectorAll('li')].map(item => {
+      const word = item.textContent.trim();
+      return { word, span: context.measureText(word).width + 4 };
+    });
+    if (!labels.length) return;
 
-    for (let y = size; y < height - size; y += size * 1.45) {
-      for (let x = size; x < width - size;) {
-        if (!inside(x, y)) {
-          x += 2;
-          continue;
-        }
-        const word = words[particles.length % words.length];
-        const span = context.measureText(word).width;
-        let fits = x + span < width;
-        for (let offset = 0; fits && offset <= span; offset += 2) {
-          fits = inside(x + offset, y - size / 2) && inside(x + offset, y + size / 2);
-        }
-        if (!fits) {
-          x += 2;
-          continue;
-        }
-        particles.push({ word, x, y, fromX: Math.random() * width, fromY: Math.random() * height });
-        x += span + size * .55;
-      }
+    // Give each row a word, then balance the remaining words by row length.
+    // Repeats fill the strokes in the shorter Soft skills category.
+    for (let i = 0; i < Math.max(62, labels.length); i++) {
+      const label = labels[i % labels.length];
+      const row = rows[i] ?? rows.reduce((best, candidate) =>
+        (candidate.used + label.span) / candidate.length < (best.used + label.span) / best.length
+          ? candidate : best
+      );
+      row.labels.push(label);
+      row.used += label.span;
     }
-    art.querySelector('.skills-fallback').hidden = particles.length > 0;
-    if (!particles.length) return;
+
+    const particles = rows.flatMap(row => {
+      let cursor = 0;
+      return row.labels.map(({ word, span }) => {
+        const slot = span * row.length / row.used;
+        const position = cursor + slot / 2;
+        cursor += slot;
+        return {
+          word,
+          x: left + (row.x + Math.cos(row.angle) * position) * scale,
+          y: top + (row.y + Math.sin(row.angle) * position) * scale,
+          angle: Math.cos(row.angle) < -0.001 ? row.angle + Math.PI : row.angle,
+          maxWidth: (slot - 1.5) * scale,
+          fromX: Math.random() * width,
+          fromY: Math.random() * height,
+        };
+      });
+    });
+    art.querySelector('.skills-fallback').hidden = true;
+    context.font = `700 ${12 * scale}px "DM Sans", sans-serif`;
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
 
     const start = performance.now();
     function paint(now) {
       const progress = animate && !motion.matches ? Math.min((now - start) / 1150, 1) : 1;
       const eased = 1 - (1 - progress) ** 3;
       context.clearRect(0, 0, width, height);
-      particles.forEach(({ word, x, y, fromX, fromY }, index) => {
+      particles.forEach(({ word, x, y, angle, maxWidth, fromX, fromY }, index) => {
         context.fillStyle = index % 4 === 0 ? '#e5b383' : '#ffeac6';
-        context.fillText(word, fromX + (x - fromX) * eased, fromY + (y - fromY) * eased);
+        context.save();
+        context.translate(fromX + (x - fromX) * eased, fromY + (y - fromY) * eased);
+        context.rotate(angle * eased);
+        context.fillText(word, 0, 0, maxWidth);
+        context.restore();
       });
       if (progress < 1 && visible) frame = requestAnimationFrame(paint);
     }
@@ -100,6 +119,6 @@
     visible = entry.isIntersecting;
     if (entering) draw(true);
   }, { threshold: .3 }).observe(art);
-  document.fonts.ready.then(() => draw());
+  document.fonts.ready.then(() => { if (!visible) draw(); });
   motion.addEventListener('change', () => draw());
 })();
