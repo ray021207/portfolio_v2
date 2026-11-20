@@ -232,6 +232,9 @@
 .beyond-personal-gallery figure {
   margin: 0;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid #b7c8b6;
@@ -246,8 +249,10 @@
 }
 .beyond-personal-gallery img {
   display: block;
+  flex: 0 0 auto;
   width: 100%;
-  height: clamp(145px, 21.5vh, 215px);
+  height: auto;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   object-position: center 44%;
   background: #e7dcca;
@@ -259,6 +264,8 @@
 .beyond-personal-gallery .personal-photo--painting img { object-position: center 60%; }
 .beyond-personal-gallery figure:hover img { transform: scale(1.025); filter: saturate(1) contrast(1.02); }
 .beyond-personal-gallery figcaption {
+  flex: 1;
+  min-height: 116px;
   padding: 13px 16px 15px;
   display: flex;
   flex-direction: column;
@@ -313,15 +320,16 @@
 }
 @media (max-width: 700px) {
   .beyond-personal-gallery { grid-template-columns: 1fr; }
-  .beyond-personal-gallery figure { display: grid; grid-template-columns: 42% minmax(0,1fr); }
-  .beyond-personal-gallery img { height: 100%; min-height: 180px; max-height: 245px; }
-  .beyond-personal-gallery figcaption { padding: 15px 13px; justify-content: center; }
+  .beyond-personal-gallery figure { display: flex; flex-direction: row; min-height: 185px; }
+  .beyond-personal-gallery img { flex: 0 0 42%; width: 42%; height: auto; aspect-ratio: auto; align-self: stretch; object-fit: cover; }
+  .beyond-personal-gallery figcaption { flex: 1; min-width: 0; min-height: 0; padding: 15px 13px; justify-content: center; }
   .beyond-personal-gallery figcaption strong { font-size: 21px; }
   .beyond-volunteer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 410px) {
-  .beyond-personal-gallery figure { grid-template-columns: 1fr; }
-  .beyond-personal-gallery img { height: 180px; min-height: 0; max-height: none; }
+  .beyond-personal-gallery figure { flex-direction: column; min-height: 0; }
+  .beyond-personal-gallery img { flex: 0 0 auto; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+  .beyond-personal-gallery figcaption { min-height: 108px; }
   .beyond-volunteer-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
