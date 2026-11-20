@@ -13,17 +13,30 @@
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: center;
 }
-.skills-art {
-  position: relative;
-  display: grid;
-  place-items: center;
-  min-height: clamp(12rem, 42vw, 33rem);
-  overflow: hidden;
+.skills-art svg { display: block; width: 100%; height: auto; }
+.skills-letterforms { fill: var(--cream); }
+.skills-path-labels {
+  fill: var(--forest);
+  font: 750 13px "DM Sans", sans-serif;
+  text-anchor: middle;
+  dominant-baseline: central;
 }
-.skills-art canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.skills-fallback {
-  color: var(--cream);
-  font: 600 clamp(4rem, 19vw, 18rem)/1 var(--font-serif);
+.skills-path-labels[data-art="soft"],
+.skills-art[data-active="soft"] .skills-path-labels[data-art="technical"] { display: none; }
+.skills-art[data-active="soft"] .skills-path-labels[data-art="soft"] { display: inline; }
+@media (prefers-reduced-motion: no-preference) {
+  .skills-art-entered .skills-path-labels text {
+    animation: skills-label-float 3.8s ease-in-out both;
+  }
+  .skills-art-entered .skills-path-labels text:nth-child(3n + 2) { animation-delay: .12s; }
+  .skills-art-entered .skills-path-labels text:nth-child(3n) { animation-delay: .24s; }
+}
+@keyframes skills-label-float {
+  0% { opacity: 0; transform: translate(0, 4px); }
+  20% { opacity: 1; transform: translate(0, 0); }
+  45% { transform: translate(1px, -2px); }
+  75% { transform: translate(-1px, 1px); }
+  100% { transform: translate(0, 0); }
 }
 .skills-reader {
   padding: 1rem;
@@ -47,7 +60,6 @@
 .skill-inventory li { border: 1px solid #c18b5755; padding: .23rem .42rem; font-size: .78rem; }
 @media (max-width: 760px) {
   .skills-layout { grid-template-columns: minmax(0, 1fr); }
-  .skills-art { min-height: clamp(12rem, 52vw, 24rem); }
   .skills-scroll { max-height: 17rem; }
 }
 
