@@ -4,10 +4,6 @@
 
   const art = section.querySelector('.skills-art');
   const labels = art.querySelector('.skills-path-labels');
-  const controls = section.querySelector('.skills-controls');
-  const buttons = [...controls.querySelectorAll('button')];
-  const inventories = [...section.querySelectorAll('.skill-inventory')];
-  const scroll = section.querySelector('.skills-scroll');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const svgNS = 'http://www.w3.org/2000/svg';
   const fontSize = 11;
@@ -28,9 +24,8 @@
     return offsets.map(offset => ({ id, length, offset }));
   });
 
-  function fillLetters(inventory) {
-    labels.replaceChildren();
-    const skills = [...inventory.querySelectorAll('li')].map(item => {
+  function fillLetters() {
+    const skills = [...section.querySelectorAll('.skill-inventory li')].map(item => {
       const word = item.textContent.trim();
       const width = measure?.measureText(word).width ?? word.length * fontSize * .55;
       return { word, width };
@@ -80,9 +75,7 @@
     }
   }
 
-  let generation = 0;
   function flyIn() {
-    const sequence = ++generation;
     if (motion.matches || !labels.firstChild?.animate) {
       labels.setAttribute('clip-path', 'url(#ray-letter-boundaries)');
       return;
@@ -104,18 +97,8 @@
       });
     });
     Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
-      if (sequence === generation) labels.setAttribute('clip-path', 'url(#ray-letter-boundaries)');
+      labels.setAttribute('clip-path', 'url(#ray-letter-boundaries)');
     });
-  }
-
-  let entered = false;
-  function select(category) {
-    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.filter === category)));
-    const inventory = inventories.find(item => item.dataset.skills === category);
-    inventories.forEach(item => { item.hidden = item !== inventory; });
-    scroll.scrollTop = 0;
-    fillLetters(inventory);
-    if (entered) flyIn();
   }
 
   async function initialize() {
@@ -123,9 +106,7 @@
       await document.fonts.load(measure.font).catch(() => {});
     }
 
-    select('technical');
-    controls.hidden = false;
-    buttons.forEach(button => button.addEventListener('click', () => select(button.dataset.filter)));
+    fillLetters();
     motion.addEventListener('change', () => {
       if (!motion.matches) return;
       for (const label of labels.children) {
@@ -137,7 +118,6 @@
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(([entry]) => {
         if (!entry.isIntersecting) return;
-        entered = true;
         flyIn();
         observer.disconnect();
       }, { threshold: .25 });
