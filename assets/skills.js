@@ -14,7 +14,7 @@
   const gap = 8;
   const edge = 7;
   const measure = document.createElement('canvas').getContext('2d');
-  if (measure) measure.font = `650 ${fontSize}px system-ui`;
+  if (measure) measure.font = `650 ${fontSize}px ${getComputedStyle(labels).fontFamily}`;
 
   const strokes = [
     ['r-stem', [-13, 0, 13]], ['r-bowl', [-12, 0, 12]], ['r-cross', [-8, 6]],
@@ -118,24 +118,32 @@
     if (entered) flyIn();
   }
 
-  select('technical');
-  controls.hidden = false;
-  buttons.forEach(button => button.addEventListener('click', () => select(button.dataset.filter)));
-  motion.addEventListener('change', () => {
-    if (!motion.matches) return;
-    for (const label of labels.children) {
-      label.getAnimations().forEach(animation => animation.cancel());
+  async function initialize() {
+    if (measure && document.fonts) {
+      await document.fonts.load(measure.font).catch(() => {});
     }
-    labels.setAttribute('clip-path', 'url(#ray-letter-boundaries)');
-  });
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      entered = true;
-      flyIn();
-      observer.disconnect();
-    }, { threshold: .25 });
-    observer.observe(art);
+    select('technical');
+    controls.hidden = false;
+    buttons.forEach(button => button.addEventListener('click', () => select(button.dataset.filter)));
+    motion.addEventListener('change', () => {
+      if (!motion.matches) return;
+      for (const label of labels.children) {
+        label.getAnimations().forEach(animation => animation.cancel());
+      }
+      labels.setAttribute('clip-path', 'url(#ray-letter-boundaries)');
+    });
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        entered = true;
+        flyIn();
+        observer.disconnect();
+      }, { threshold: .25 });
+      observer.observe(art);
+    }
   }
+
+  initialize();
 })();

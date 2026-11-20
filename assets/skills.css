@@ -1,6 +1,6 @@
 .skills-section {
   padding-block: clamp(3rem, 6vw, 5.5rem);
-  background: var(--forest);
+  background: linear-gradient(150deg, var(--pine), var(--forest) 70%);
   color: var(--paper);
 }
 .skills-section .section-label { color: var(--copper); }
@@ -13,15 +13,15 @@
   align-items: center;
 }
 .skills-art svg { display: block; width: 100%; height: auto; }
-.skills-letterforms { fill: var(--cream); }
+.skills-letterforms { fill: color-mix(in srgb, var(--paper) 80%, var(--moss)); }
 .skills-path-labels {
   fill: var(--forest);
-  font: 650 11px system-ui, sans-serif;
+  font: 650 11px var(--font-sans);
   text-anchor: middle;
   dominant-baseline: central;
 }
-.skills-label-olive { fill: #3e5845; }
-.skills-label-rust { fill: #70492e; }
+.skills-label-olive { fill: var(--moss); }
+.skills-label-rust { fill: color-mix(in srgb, var(--ink) 55%, var(--copper)); }
 .skills-reader {
   padding: 1rem;
   border: 1px solid color-mix(in srgb, var(--cream) 23%, transparent);
