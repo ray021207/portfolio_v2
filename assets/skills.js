@@ -23,28 +23,30 @@
     canvas.height = height * ratio;
     context.setTransform(ratio, 0, 0, ratio, 0, 0);
 
-    // Parallel rows of words trace the strokes of R, A and Y.
+    // Slanted stems and Bézier curves give the three letters an italic silhouette.
     const strokes = [
-      [26, 29, 26, 215], [40, 39, 113, 39], [128, 38, 128, 118],
-      [40, 117, 113, 117], [67, 132, 144, 215],
-      [177, 215, 235, 33], [235, 33, 293, 215], [204, 150, 266, 150],
-      [320, 32, 386, 126], [452, 32, 386, 126], [386, 137, 386, 215],
+      'M 60 35 C 48 96 39 168 20 213',
+      'M 63 39 C 111 24 157 32 149 73 C 143 109 105 123 49 117',
+      'M 73 120 C 109 129 110 198 148 211',
+      'M 161 212 C 187 172 218 86 272 34',
+      'M 272 36 C 254 88 258 183 286 212',
+      'M 195 149 Q 227 141 265 148',
+      'M 314 32 C 337 52 331 105 371 126',
+      'M 463 32 C 444 76 413 110 373 127',
+      'M 373 127 C 362 158 354 198 331 213',
     ];
-    const rows = strokes.flatMap(([x, y, endX, endY]) => {
-      const angle = Math.atan2(endY - y, endX - x);
-      const length = Math.hypot(endX - x, endY - y);
-      return [-6, 6].map(offset => ({
-        x: x - Math.sin(angle) * offset,
-        y: y + Math.cos(angle) * offset,
-        angle, length, labels: [], used: 0,
-      }));
+    const rows = strokes.flatMap(stroke => {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', stroke);
+      const length = path.getTotalLength();
+      return [-6, 6].map(offset => ({ path, offset, length, labels: [], used: 0 }));
     });
     const scale = Math.min(width / 476, height / 246);
     const left = (width - 476 * scale) / 2;
     const top = (height - 246 * scale) / 2;
     const inventory = inventories.find(item => item.dataset.skills === active);
     const codeFont = '"DM Mono", ui-monospace, monospace';
-    context.font = `700 12px ${codeFont}`;
+    context.font = `italic 700 12px ${codeFont}`;
     const labels = [...inventory.querySelectorAll('li')].map(item => {
       const word = `• ${item.textContent.trim()}`;
       return { word, span: context.measureText(word).width + 4 };
@@ -69,11 +71,17 @@
         const slot = span * row.length / row.used;
         const position = cursor + slot / 2;
         cursor += slot;
+        const point = row.path.getPointAtLength(position);
+        const before = row.path.getPointAtLength(Math.max(0, position - 2));
+        const after = row.path.getPointAtLength(Math.min(row.length, position + 2));
+        const tangent = Math.atan2(after.y - before.y, after.x - before.x);
+        const angle = tangent > Math.PI / 2 ? tangent - Math.PI
+          : tangent < -Math.PI / 2 ? tangent + Math.PI : tangent;
         return {
           word,
-          x: left + (row.x + Math.cos(row.angle) * position) * scale,
-          y: top + (row.y + Math.sin(row.angle) * position) * scale,
-          angle: Math.cos(row.angle) < -0.001 ? row.angle + Math.PI : row.angle,
+          x: left + (point.x - Math.sin(tangent) * row.offset) * scale,
+          y: top + (point.y + Math.cos(tangent) * row.offset) * scale,
+          angle,
           maxWidth: (slot - 1.5) * scale,
           fromX: Math.random() * width,
           fromY: Math.random() * height,
@@ -81,7 +89,7 @@
       });
     });
     art.querySelector('.skills-fallback').hidden = true;
-    context.font = `700 ${12 * scale}px ${codeFont}`;
+    context.font = `italic 700 ${12 * scale}px ${codeFont}`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
 
