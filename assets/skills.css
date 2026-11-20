@@ -1,39 +1,40 @@
 .skills-section {
-  min-height: 100svh;
-  padding-block: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(3rem, 6vw, 5.5rem);
   background: var(--forest);
   color: var(--paper);
 }
 .skills-section .section-label { color: var(--copper); }
-.skills-section .display-title { margin-bottom: clamp(1.5rem, 4vw, 3rem); }
+.skills-section .display-title { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
 .skills-section .display-title em { color: var(--cream); }
 .skills-layout {
   display: grid;
   grid-template-columns: minmax(0, 2.65fr) minmax(15rem, 1fr);
-  gap: clamp(1rem, 3vw, 2.5rem);
+  gap: clamp(.85rem, 2vw, 1.5rem);
   align-items: center;
 }
 .skills-art svg { display: block; width: 100%; height: auto; }
 .skills-letterforms { fill: var(--cream); }
 .skills-path-labels {
   fill: var(--forest);
-  font: 650 10.5px system-ui, sans-serif;
+  font: 650 11px system-ui, sans-serif;
   text-anchor: middle;
   dominant-baseline: central;
 }
-.skills-label-olive { fill: #365c40; }
-.skills-label-rust { fill: #784d30; }
+.skills-label-olive { fill: #3e5845; }
+.skills-label-rust { fill: #70492e; }
 .skills-reader {
   padding: 1rem;
-  border: 1px solid #c18b5780;
-  background: #18392f;
+  border: 1px solid color-mix(in srgb, var(--cream) 23%, transparent);
+  border-radius: .75rem;
+  background: color-mix(in srgb, var(--cream) 5%, var(--forest));
 }
 .skills-controls { display: flex; flex-wrap: wrap; gap: .4rem; padding-bottom: .75rem; }
 .skills-controls[hidden] { display: none; }
 .skills-controls button {
   min-height: 44px;
   padding: .45rem .65rem;
-  border: 1px solid var(--copper);
+  border: 1px solid color-mix(in srgb, var(--cream) 28%, transparent);
+  border-radius: .4rem;
   background: transparent;
   color: var(--paper);
   cursor: pointer;
@@ -42,7 +43,13 @@
 .skills-scroll { max-height: min(52svh, 27rem); overflow: auto; scrollbar-color: var(--copper) var(--forest); }
 .skill-inventory h3 { margin: .65rem 0 .4rem; color: var(--cream); font: 500 1.1rem var(--font-serif); }
 .skill-inventory ul { display: flex; flex-wrap: wrap; gap: .35rem; list-style: none; padding: 0; margin: 0 0 1rem; }
-.skill-inventory li { border: 1px solid #c18b5755; padding: .23rem .42rem; font-size: .78rem; }
+.skill-inventory li {
+  border: 1px solid color-mix(in srgb, var(--cream) 15%, transparent);
+  border-radius: .35rem;
+  background: color-mix(in srgb, var(--cream) 4%, transparent);
+  padding: .23rem .42rem;
+  font-size: .78rem;
+}
 @media (max-width: 760px) {
   .skills-layout { grid-template-columns: minmax(0, 1fr); }
   .skills-scroll { max-height: 17rem; }
