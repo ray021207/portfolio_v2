@@ -55,6 +55,7 @@
   letter-spacing:.15em;
   color:#567362;
 }
+.coverflow-eyebrow{margin:0;font-weight:400;}
 .coverflow-eyebrow span{color:#ae8554;margin-inline:9px;}
 .coverflow-topline-note{color:#9a815d;font-size:10px;}
 .coverflow-shell{

@@ -81,12 +81,12 @@ for page in PAGES:
 # Catch regression to the once-missing image and broken hero.
 home = (ROOT / "index.html").read_text("utf-8")
 for required in [
-    "assets/hero/mountain-medallion.png",
-    "assets/hero/portrait.png",
-    "assets/hero/robot-dog.png",
-    "assets/hero/medical-monitor.png",
-    "assets/hero/camera-trap.png",
-    "assets/hero/deer.png",
+    "assets/hero/mountain-medallion.webp",
+    "assets/hero/portrait.webp",
+    "assets/hero/robot-dog.webp",
+    "assets/hero/medical-monitor.webp",
+    "assets/hero/camera-trap.webp",
+    "assets/hero/deer.webp",
 ]:
     if required not in home:
         ISSUES.append(f"Missing hero layer reference: {required}")
@@ -220,7 +220,7 @@ if work_index.is_file():
                 'data-coverflow-dot="1"', 'data-coverflow-dot="2"', 'data-coverflow-dot="3"']:
         if key not in work:
             ISSUES.append(f"Work coverflow control missing: {key}")
-    for asset in ['../assets/coverflow-work.css?v=1', '../assets/coverflow-work.js?v=1']:
+    for asset in ['../assets/coverflow-work.css?v=2', '../assets/coverflow-work.js?v=1']:
         if asset not in work:
             ISSUES.append(f"Work coverflow stylesheet/script not linked: {asset}")
 

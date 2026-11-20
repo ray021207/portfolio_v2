@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#102d25">
+  <meta name="description" content="A held-out camera study of early wildfire smoke detection, alert timing and false alarms on HPWREN FIgLib.">
+  <title>Early wildfire smoke detection — Reshma Panibhate</title>
+  <link rel="stylesheet" href="../assets/site-v3.css?v=4">
+  <link rel="stylesheet" href="../assets/site-refinement.css?v=4">
+  <link rel="stylesheet" href="../assets/evidence-pages.css?v=8">
+  <script defer src="../assets/site-v3.js?v=2"></script>
+</head>
+<body>
+<a class="skip" href="#case-study">Skip to case study</a>
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="../index.html">Reshma Panibhate <em>(Ray)</em></a>
+    <button type="button" class="menu-toggle" aria-controls="site-links" aria-expanded="false">Menu ☰</button>
+    <nav class="nav-links" id="site-links" aria-label="Main navigation">
+      <a href="../index.html">Home</a><a href="index.html">Work</a><a href="../index.html#experience">Journey</a><a class="nav-cta" href="../index.html#contact">Let's talk ↗</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="evidence-hero">
+    <div class="container">
+      <div class="evidence-topnav"><a href="conservation.html">← Conservation &amp; Geospatial AI</a><span>RESEARCH REPORT</span></div>
+      <p class="eyebrow">Wildfire smoke detection · Computer vision</p>
+      <h1>How early can a new camera spot wildfire smoke?</h1>
+      <p class="evidence-lead">I tested whether watching how a scene changes over time can detect smoke earlier on unfamiliar cameras, and how many false alerts that speed costs.</p>
+    </div>
+  </section>
+  <div class="evidence-stats"><div class="container evidence-stats-grid">
+    <div class="evidence-stat"><strong>110</strong><span>FIRE SEQUENCES</span></div>
+    <div class="evidence-stat"><strong>69</strong><span>CAMERAS IN THE STUDY</span></div>
+    <div class="evidence-stat"><strong>19</strong><span>FIRES AT HELD-OUT SITES</span></div>
+  </div></div>
+  <div class="evidence-stage" id="case-study"><div class="container evidence-layout">
+    <aside class="evidence-sidebar">
+      <dl class="evidence-meta"><dt>Data</dt><dd>HPWREN FIgLib · Southern California</dd><dt>Methods</dt><dd>MobileNetV3 · Temporal differencing · Alert persistence</dd><dt>Project type</dt><dd>Independent research benchmark</dd></dl>
+      <a href="vision.html">Explore Computer Vision &amp; Applied AI ↗</a>
+    </aside>
+    <article class="evidence-content">
+      <section class="reveal">
+        <h2>Testing on cameras the model hadn’t seen</h2>
+        <p>I split the data by fire day and reserved seven entire camera sites for a separate test. I compared a single-frame detector with a model that also saw the difference from the previous frame. Both used overlapping tiles to preserve small plumes. I selected thresholds on validation data and froze them before testing.</p>
+      </section>
+      <section class="reveal">
+        <h2>Faster alerts came with a trade-off</h2>
+        <p>Across the 19 fires at held-out sites, the single-frame model detected 68% within 10 minutes, with a median detection time of five minutes after the first visible smoke label and 95.4 estimated false alerts per camera-day. Adding temporal differencing raised the 10-minute detection rate to 84% and cut the median to two minutes, but raised false alerts to 116.3 per camera-day.</p>
+        <p>Requiring detections in three of the last five frames brought the temporal model to 38.1 estimated false alerts per camera-day, with a three-minute median and 74% of fires detected within 10 minutes.</p>
+      </section>
+      <section class="reveal">
+        <h2>What the benchmark can tell us</h2>
+        <p>There were only about 13 smoke-free camera-hours in each test set. The daily false-alert figures are extrapolations from those short windows and have wide confidence intervals. Haze and clouds were common false-alert sources. At a strict validation budget of one false alert per camera-day, every tested model missed most fires. The model would need longer negative recordings, broader regional coverage and additional validation before field use.</p>
+      </section>
+      <div class="evidence-refs">
+        <h3>Report and evidence</h3>
+        <p><a href="https://github.com/ray021207/Wildfire-detection">Read the report, figures and reproducibility notes on GitHub ↗</a></p>
+        <p>Data courtesy of HPWREN, University of California San Diego.</p>
+        <p><a href="camera-trap-location-shift.html">Related research on camera-trap generalization ↗</a></p>
+      </div>
+    </article>
+  </div></div>
+</main>
+<footer class="site-footer"><div class="container foot-inner"><span>© 2026 Reshma Panibhate</span><a href="index.html">Back to Work ↗</a></div></footer>
+</body>
+</html>

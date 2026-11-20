@@ -17,7 +17,7 @@
   if (measure) measure.font = `650 ${fontSize}px ${getComputedStyle(labels).fontFamily}`;
 
   const strokes = [
-    ['r-stem', [-13, 0, 13]], ['r-bowl', [-12, 0, 12]], ['r-cross', [-8, 6]],
+    ['r-stem', [-13, 0, 13]], ['r-bowl', [-9, 9]], ['r-cross', [-8, 6]],
     ['r-leg', [-12, 0, 12]], ['a-arch', [-9, 3]], ['a-right', [-8, 6]],
     ['a-cross', [-6, 6]], ['a-loop', [-8, 5]], ['y-left', [-12, 0, 12]],
     ['y-right', [-12, 0, 12]], ['y-junction', [0]], ['y-tail', [-8, 5]],

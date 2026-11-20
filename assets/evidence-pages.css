@@ -3,7 +3,7 @@
 .evidence-hero::before {content:"";position:absolute;inset:0;background:url("./hero/background.png") center/cover;opacity:.12;pointer-events:none}
 .evidence-hero .container{position:relative}
 .evidence-hero .eyebrow {font:11px/1.7 var(--font-mono);color:#dfc19a;letter-spacing:.12em;text-transform:uppercase}
-.evidence-hero h1 {font:400 clamp(47px,7.2vw,105px)/1.04 var(--font-serif);letter-spacing:-.065em;max-width:1100px;text-wrap:balance;margin:18px 0 24px}
+.evidence-hero h1 {font:400 clamp(47px,7.2vw,105px)/1.04 var(--font-serif);letter-spacing:-.035em;max-width:1100px;text-wrap:balance;margin:18px 0 24px}
 .evidence-hero .evidence-lead{font:400 clamp(17px,2.2vw,22px)/1.65 var(--font-sans);max-width:720px;color:#d2ddcf}
 .evidence-hero .evidence-topnav {display:flex;justify-content:space-between;gap:10px;align-items:center;font:11px var(--font-mono)}
 .evidence-hero .evidence-topnav a{color:#f2d6a9;text-decoration:none;border-bottom:1px solid #d2b47a;padding-bottom:5px}
