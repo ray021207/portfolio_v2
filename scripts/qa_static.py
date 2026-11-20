@@ -24,6 +24,7 @@ CSS_FILES = [
     ROOT / "assets/awards-compact.css",
     ROOT / "assets/evidence-pages.css",
     ROOT / "assets/coverflow-work.css",
+    ROOT / "assets/beyond-spin.css",
 ]
 JS = ROOT / "assets/site-v3.js"
 ISSUES = []
@@ -170,20 +171,35 @@ for photo in [
 ]:
     if photo not in home or not (ROOT / photo).is_file():
         ISSUES.append(f"Original volunteering photo missing: {photo}")
-# Verify that the owner's actual photographs—not generated substitutes—are present.
-for photo in [
+# All six user-approved photos now share a single animated / accessible gallery.
+six_sources = [
     "assets/evidence/personal/foster-puppies.jpg",
     "assets/evidence/personal/animal-facts-journal.png",
     "assets/evidence/personal/my-paintings.png",
-]:
-    if photo not in home or not (ROOT / photo).is_file():
-        ISSUES.append(f"Personal photo missing or not referenced: {photo}")
-if home.count('class="personal-photo personal-photo--') != 3:
-    ISSUES.append("Expected exactly three personal photo cards")
-if 'href="assets/awards-compact.css?v=2"' not in home:
-    ISSUES.append("Personal photography styling is not loaded")
-if 'Foster-puppy photos, animal-journal pages and paintings will be added' in home:
-    ISSUES.append("Outdated placeholder caption after personal photo upload")
+    "assets/evidence/volunteer/shelter.jpg",
+    "assets/evidence/volunteer/farm.jpg",
+    "assets/evidence/volunteer/fire-safety.jpg",
+]
+for source in six_sources:
+    if f'src="{source}"' not in home or not (ROOT / source).is_file():
+        ISSUES.append(f"Original photo missing or not displayed: {source}")
+if home.count('data-spin-card data-spin-index=') != 6:
+    ISSUES.append("Beyond the Lab must show six uniform photo cards")
+if 'href="assets/beyond-spin.css?v=1"' not in home:
+    ISSUES.append("Beyond the Lab rotating gallery stylesheet is missing")
+if 'src="assets/beyond-spin.js?v=1"' not in home:
+    ISSUES.append("Beyond the Lab interaction script is missing")
+if 'data-spin-dialog' not in home or 'data-spin-toggle' not in home:
+    ISSUES.append("Beyond the Lab photo viewer or motion controls missing")
+if 'href="assets/awards-compact.css?v=4"' not in home:
+    ISSUES.append("Outdated or missing Awards/Beyond base stylesheet")
+for file in [ROOT / "assets/beyond-spin.js", ROOT / "assets/coverflow-work.js"]:
+    if file.is_file():
+        jscheck = subprocess.run(["node", "--check", str(file)], capture_output=True, text=True)
+        if jscheck.returncode:
+            ISSUES.append(f"Invalid JavaScript syntax: {file.name}: {jscheck.stderr.strip()}")
+    else:
+        ISSUES.append(f"JavaScript file missing: {file.name}")
 
 # Four-card, single-viewport Work explorer — no extra full-screen introduction.
 work_index = ROOT / "projects" / "index.html"
