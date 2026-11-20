@@ -157,7 +157,7 @@ if '<h3>RecoveryIQ</h3>' in home and not re.search(
     ISSUES.append("RecoveryIQ hackathon placement must be second")
 if 'class="page-section beyond-page" id="beyond"' not in home:
     ISSUES.append("Beyond-the-Lab viewport section is missing")
-if 'href="assets/awards-compact.css?v=2"' not in home:
+if 'href="assets/awards-compact.css?v=3"' not in home:
     ISSUES.append("Compact awards layout stylesheet is not loaded")
 if 'class="awards-next" href="#beyond"' not in home:
     ISSUES.append("Awards-to-Beyond navigation is missing")
